@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <title>Sistema Empresarial</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        header {
+            background: #0f172a;
+            color: white;
+            padding: 18px;
+        }
+
+        header h1 {
+            font-size: 22px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .bienvenida {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.08);
+        }
+
+        .bienvenida h2 {
+            margin-bottom: 10px;
+        }
+
+        .modulos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .modulo {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.08);
+            cursor: pointer;
+        }
+
+        .modulo h3 {
+            margin-bottom: 8px;
+        }
+
+        .modulo p {
+            color: #64748b;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Sistema Empresarial</h1>
+</header>
+
+<main>
+
+    <section class="bienvenida">
+        <h2>Panel principal</h2>
+        <p>Bienvenido al sistema empresarial.</p>
+    </section>
+
+    <section class="modulos">
+
+        <div class="modulo">
+            <h3>Facturas</h3>
+            <p>Administración de facturas.</p>
+        </div>
+
+        <div class="modulo">
+            <h3>Ingresos</h3>
+            <p>Control de ingresos.</p>
+        </div>
+
+        <div class="modulo">
+            <h3>Egresos</h3>
+            <p>Control de egresos y salarios.</p>
+        </div>
+
+        <div class="modulo">
+            <h3>Cheques</h3>
+            <p>Control de cheques emitidos.</p>
+        </div>
+
+        <div class="modulo">
+            <h3>Procesos del día</h3>
+            <p>Seguimiento de procesos.</p>
+        </div>
+
+        <div class="modulo">
+            <h3>Clientes</h3>
+            <p>Administración de clientes.</p>
+        </div>
+
+        <div class="modulo">
+            <h3>Documentos</h3>
+            <p>Documentos de la empresa.</p>
+        </div>
+
+        <div class="modulo">
+            <h3>Saldo en cuentas</h3>
+            <p>Control financiero.</p>
+        </div>
+
+        <div class="modulo">
+            <h3>Configuración</h3>
+            <p>Configuración del sistema.</p>
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>
