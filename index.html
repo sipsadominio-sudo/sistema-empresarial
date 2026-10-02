@@ -5,9 +5,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f172a">
+
 <title>Sistema Empresarial</title>
 
 <style>
+
 *{
 box-sizing:border-box;
 margin:0;
@@ -118,28 +120,9 @@ justify-content:center;
 min-height:42px
 }
 
-.btn-principal{
-background:#0f172a;
-color:#ffffff
-}
-
-.btn-principal:hover{
-background:#1e293b
-}
-
 .btn-secundario{
 background:#e2e8f0;
 color:#0f172a
-}
-
-.btn-editar{
-background:#e2e8f0;
-margin-right:5px
-}
-
-.btn-eliminar{
-background:#fee2e2;
-color:#991b1b
 }
 
 .buscar{
@@ -159,7 +142,7 @@ overflow-x:auto
 table{
 width:100%;
 border-collapse:collapse;
-min-width:800px
+min-width:750px
 }
 
 th,
@@ -171,47 +154,6 @@ text-align:left
 
 th{
 background:#f8fafc
-}
-
-#formularioCliente{
-display:none;
-margin-bottom:20px;
-background:#f8fafc;
-padding:18px;
-border-radius:10px
-}
-
-.form-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px
-}
-
-.campo{
-display:flex;
-flex-direction:column;
-gap:6px
-}
-
-.campo label{
-font-size:14px;
-font-weight:bold
-}
-
-.campo input,
-.campo select{
-padding:11px;
-border:1px solid #cbd5e1;
-border-radius:7px;
-width:100%;
-font-size:15px
-}
-
-.botones-formulario{
-margin-top:18px;
-display:flex;
-gap:10px;
-flex-wrap:wrap
 }
 
 #mensaje{
@@ -244,10 +186,6 @@ main{
 padding:12px
 }
 
-.form-grid{
-grid-template-columns:1fr
-}
-
 .panel{
 padding:14px
 }
@@ -261,6 +199,7 @@ padding:15px
 }
 
 }
+
 </style>
 
 </head>
@@ -268,7 +207,9 @@ padding:15px
 <body>
 
 <header>
+
 <h1>Sistema Empresarial</h1>
+
 </header>
 
 <main>
@@ -283,17 +224,20 @@ Bienvenido al sistema empresarial.
 
 </section>
 
+
 <section class="modulos">
+
 
 <div class="modulo" onclick="abrirClientes()">
 
 <h3>👥 Clientes</h3>
 
 <p>
-Administración de clientes.
+Consulta de clientes.
 </p>
 
 </div>
+
 
 <div class="modulo">
 
@@ -305,6 +249,7 @@ Administración de facturas.
 
 </div>
 
+
 <div class="modulo">
 
 <h3>💰 Ingresos</h3>
@@ -314,6 +259,7 @@ Control de ingresos.
 </p>
 
 </div>
+
 
 <div class="modulo">
 
@@ -325,6 +271,7 @@ Control de egresos y salarios.
 
 </div>
 
+
 <div class="modulo">
 
 <h3>🏦 Cheques</h3>
@@ -334,6 +281,7 @@ Control de cheques emitidos.
 </p>
 
 </div>
+
 
 <div class="modulo">
 
@@ -345,6 +293,7 @@ Seguimiento de procesos.
 
 </div>
 
+
 <div class="modulo">
 
 <h3>📁 Documentos</h3>
@@ -354,6 +303,7 @@ Documentos de la empresa.
 </p>
 
 </div>
+
 
 <div class="modulo">
 
@@ -365,6 +315,7 @@ Control financiero.
 
 </div>
 
+
 <div class="modulo">
 
 <h3>⚙️ Configuración</h3>
@@ -375,11 +326,14 @@ Configuración del sistema.
 
 </div>
 
+
 </section>
+
 
 <section id="clientesModulo">
 
 <div class="panel">
+
 
 <div class="panel-header">
 
@@ -398,136 +352,13 @@ Volver
 
 </button>
 
-<button
-type="button"
-class="btn-principal"
-onclick="nuevoCliente()">
-
-➕ Nuevo cliente
-
-</button>
-
 </div>
 
 </div>
+
 
 <div id="mensaje"></div>
 
-<div id="formularioCliente">
-
-<h3 id="tituloFormulario">
-Nuevo cliente
-</h3>
-
-<br>
-
-<div class="form-grid">
-
-<div class="campo">
-
-<label>
-Empresa
-</label>
-
-<input
-type="text"
-id="empresa">
-
-</div>
-
-<div class="campo">
-
-<label>
-Área
-</label>
-
-<input
-type="text"
-id="area">
-
-</div>
-
-<div class="campo">
-
-<label>
-Nombre de contacto
-</label>
-
-<input
-type="text"
-id="nombreContacto">
-
-</div>
-
-<div class="campo">
-
-<label>
-Teléfono
-</label>
-
-<input
-type="text"
-id="telefono">
-
-</div>
-
-<div class="campo">
-
-<label>
-Correo electrónico
-</label>
-
-<input
-type="email"
-id="correo">
-
-</div>
-
-<div class="campo">
-
-<label>
-Estado
-</label>
-
-<select id="estado">
-
-<option value="Activo">
-Activo
-</option>
-
-<option value="Inactivo">
-Inactivo
-</option>
-
-</select>
-
-</div>
-
-</div>
-
-<div class="botones-formulario">
-
-<button
-type="button"
-class="btn-principal"
-onclick="guardarCliente()">
-
-💾 Guardar cliente
-
-</button>
-
-<button
-type="button"
-class="btn-secundario"
-onclick="cancelarFormulario()">
-
-Cancelar
-
-</button>
-
-</div>
-
-</div>
 
 <input
 type="text"
@@ -535,6 +366,7 @@ id="buscarCliente"
 class="buscar"
 placeholder="🔎 Buscar por empresa, contacto, teléfono o correo..."
 oninput="filtrarClientes()">
+
 
 <div class="tabla-contenedor">
 
@@ -556,11 +388,10 @@ oninput="filtrarClientes()">
 
 <th>Estado</th>
 
-<th>Acciones</th>
-
 </tr>
 
 </thead>
+
 
 <tbody id="listaClientes"></tbody>
 
@@ -568,9 +399,11 @@ oninput="filtrarClientes()">
 
 </div>
 
+
 </div>
 
 </section>
+
 
 <div id="estadoConexion">
 
@@ -578,23 +411,26 @@ oninput="filtrarClientes()">
 
 </div>
 
+
 </main>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="supabase-config.js"></script>
 
+
 <script>
+
 
 let clienteSupabase;
 
 let clientes=[];
 
-let clienteEditando=null;
-
 
 
 async function iniciarSistema(){
+
 
 const estadoConexion=
 document.getElementById("estadoConexion");
@@ -608,8 +444,10 @@ typeof SUPABASE_URL==="undefined" ||
 typeof SUPABASE_KEY==="undefined"
 ){
 
+
 estadoConexion.textContent=
 "🔴 No se encontró la configuración de Supabase.";
+
 
 return;
 
@@ -632,9 +470,11 @@ await clienteSupabase
 
 if(resultado.error){
 
+
 estadoConexion.textContent=
 "🔴 Error de Supabase: "+
 resultado.error.message;
+
 
 return;
 
@@ -646,6 +486,7 @@ estadoConexion.textContent=
 
 
 }catch(error){
+
 
 estadoConexion.textContent=
 "🔴 Error: "+
@@ -698,9 +539,6 @@ document
 .querySelector(".modulos")
 .style.display="grid";
 
-
-cancelarFormulario();
-
 }
 
 
@@ -710,10 +548,12 @@ async function cargarClientes(){
 
 if(!clienteSupabase){
 
+
 mostrarMensaje(
 "Supabase todavía no está conectado.",
 false
 );
+
 
 return;
 
@@ -725,7 +565,7 @@ document.getElementById("listaClientes");
 
 
 lista.innerHTML=
-"<tr><td colspan='7'>Cargando clientes...</td></tr>";
+"<tr><td colspan='6'>Cargando clientes...</td></tr>";
 
 
 const resultado=
@@ -737,13 +577,16 @@ await clienteSupabase
 
 if(resultado.error){
 
+
 mostrarMensaje(
 "Error al cargar clientes: "+
 resultado.error.message,
 false
 );
 
+
 lista.innerHTML="";
+
 
 return;
 
@@ -769,8 +612,10 @@ document.getElementById("listaClientes");
 
 if(datos.length===0){
 
+
 lista.innerHTML=
-"<tr><td colspan='7'>No hay clientes registrados.</td></tr>";
+"<tr><td colspan='6'>No hay clientes registrados.</td></tr>";
+
 
 return;
 
@@ -806,34 +651,11 @@ ${escapar(cliente["teléfono"])}
 </td>
 
 <td>
-${escapar(cliente.correo_electrónico)}
+${escapar(cliente["correo_electrónico"])}
 </td>
 
 <td>
-${escapar(cliente.estado||"Activo")}
-</td>
-
-<td>
-
-<button
-type="button"
-class="btn-editar"
-onclick="editarCliente('${escaparAtributo(cliente.id)}')">
-
-Editar
-
-</button>
-
-
-<button
-type="button"
-class="btn-eliminar"
-onclick="eliminarCliente('${escaparAtributo(cliente.id)}')">
-
-Eliminar
-
-</button>
-
+${escapar(cliente.estado||"")}
 </td>
 
 `;
@@ -860,380 +682,48 @@ document
 const filtrados=
 clientes.filter(cliente=>
 
+
 String(cliente.empresa||"")
 .toLowerCase()
 .includes(texto)
 
+
 ||
+
 
 String(cliente.nombre_contacto||"")
 .toLowerCase()
 .includes(texto)
 
+
 ||
+
 
 String(cliente["teléfono"]||"")
 .toLowerCase()
 .includes(texto)
 
+
 ||
 
-String(cliente.correo_electrónico||"")
+
+String(cliente["correo_electrónico"]||"")
 .toLowerCase()
 .includes(texto)
+
+
+||
+
+
+String(cliente["área"]||"")
+.toLowerCase()
+.includes(texto)
+
 
 );
 
 
 mostrarClientes(filtrados);
-
-}
-
-
-
-function nuevoCliente(){
-
-
-clienteEditando=null;
-
-
-document
-.getElementById("tituloFormulario")
-.textContent="Nuevo cliente";
-
-
-document.getElementById("empresa").value="";
-
-document.getElementById("area").value="";
-
-document.getElementById("nombreContacto").value="";
-
-document.getElementById("telefono").value="";
-
-document.getElementById("correo").value="";
-
-document.getElementById("estado").value="Activo";
-
-
-document
-.getElementById("formularioCliente")
-.style.display="block";
-
-
-document
-.getElementById("empresa")
-.focus();
-
-}
-
-
-
-function cancelarFormulario(){
-
-
-clienteEditando=null;
-
-
-document
-.getElementById("formularioCliente")
-.style.display="none";
-
-}
-
-
-
-function editarCliente(id){
-
-
-const cliente=
-clientes.find(
-c=>String(c.id)===String(id)
-);
-
-
-if(!cliente)return;
-
-
-clienteEditando=id;
-
-
-document
-.getElementById("tituloFormulario")
-.textContent="Editar cliente";
-
-
-document.getElementById("empresa").value=
-cliente.empresa||"";
-
-
-document.getElementById("area").value=
-cliente["área"]||"";
-
-
-document.getElementById("nombreContacto").value=
-cliente.nombre_contacto||"";
-
-
-document.getElementById("telefono").value=
-cliente["teléfono"]||"";
-
-
-document.getElementById("correo").value=
-cliente.correo_electrónico||"";
-
-
-document.getElementById("estado").value=
-cliente.estado||"Activo";
-
-
-document
-.getElementById("formularioCliente")
-.style.display="block";
-
-
-document
-.getElementById("empresa")
-.focus();
-
-}
-
-
-
-async function guardarCliente(){
-
-
-if(!clienteSupabase){
-
-mostrarMensaje(
-"Supabase todavía no está conectado.",
-false
-);
-
-return;
-
-}
-
-
-const empresa=
-document
-.getElementById("empresa")
-.value
-.trim();
-
-
-const area=
-document
-.getElementById("area")
-.value
-.trim();
-
-
-const nombreContacto=
-document
-.getElementById("nombreContacto")
-.value
-.trim();
-
-
-const telefono=
-document
-.getElementById("telefono")
-.value
-.trim();
-
-
-const correo=
-document
-.getElementById("correo")
-.value
-.trim();
-
-
-const estado=
-document
-.getElementById("estado")
-.value;
-
-
-if(!empresa){
-
-mostrarMensaje(
-"Debes ingresar el nombre de la empresa.",
-false
-);
-
-return;
-
-}
-
-
-const datos={
-
-empresa:empresa,
-
-"área":area,
-
-nombre_contacto:nombreContacto,
-
-"teléfono":telefono,
-
-correo_electrónico:correo,
-
-estado:estado
-
-};
-
-
-let resultado;
-
-
-try{
-
-
-if(clienteEditando){
-
-
-resultado=
-await clienteSupabase
-.from("clientes")
-.update(datos)
-.eq("id",clienteEditando);
-
-
-}else{
-
-
-/*
-Generamos un ID compatible
-sin utilizar crypto.randomUUID()
-*/
-
-datos.id=
-"cliente-" +
-Date.now() +
-"-" +
-Math.random()
-.toString(36)
-.substring(2,10);
-
-
-resultado=
-await clienteSupabase
-.from("clientes")
-.insert([datos]);
-
-}
-
-
-if(resultado.error){
-
-mostrarMensaje(
-"Error al guardar: "+
-resultado.error.message,
-false
-);
-
-return;
-
-}
-
-
-mostrarMensaje(
-
-clienteEditando
-?
-"Cliente actualizado correctamente."
-:
-"Cliente guardado correctamente.",
-
-true
-
-);
-
-
-cancelarFormulario();
-
-
-await cargarClientes();
-
-
-}catch(error){
-
-mostrarMensaje(
-"Error al guardar: "+
-error.message,
-false
-);
-
-}
-
-}
-
-
-
-async function eliminarCliente(id){
-
-
-if(
-!confirm(
-"¿Deseas eliminar este cliente?"
-)
-)return;
-
-
-if(!clienteSupabase){
-
-mostrarMensaje(
-"Supabase todavía no está conectado.",
-false
-);
-
-return;
-
-}
-
-
-try{
-
-
-const resultado=
-await clienteSupabase
-.from("clientes")
-.delete()
-.eq("id",id);
-
-
-if(resultado.error){
-
-mostrarMensaje(
-"Error al eliminar: "+
-resultado.error.message,
-false
-);
-
-return;
-
-}
-
-
-mostrarMensaje(
-"Cliente eliminado correctamente.",
-true
-);
-
-
-await cargarClientes();
-
-
-}catch(error){
-
-mostrarMensaje(
-"Error al eliminar: "+
-error.message,
-false
-);
-
-}
 
 }
 
@@ -1262,7 +752,9 @@ mensaje.style.display="block";
 
 setTimeout(()=>{
 
+
 mensaje.style.display="none";
+
 
 },5000);
 
@@ -1277,18 +769,25 @@ if(
 valor===null||
 valor===undefined
 )
+
+
 return"";
 
 
 return String(valor)
 
+
 .replace(/&/g,"&amp;")
+
 
 .replace(/</g,"&lt;")
 
+
 .replace(/>/g,"&gt;")
 
+
 .replace(/"/g,"&quot;")
+
 
 .replace(/'/g,"&#039;");
 
@@ -1296,28 +795,11 @@ return String(valor)
 
 
 
-function escaparAtributo(valor){
-
-
-if(
-valor===null||
-valor===undefined
-)
-return"";
-
-
-return String(valor)
-
-.replace(/\\/g,"\\\\")
-.replace(/'/g,"\\'");
-
-}
-
-
-
 iniciarSistema();
+
 
 </script>
 
 </body>
+
 </html>
