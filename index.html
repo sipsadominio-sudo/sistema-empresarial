@@ -8,7 +8,11 @@
 <title>Sistema Empresarial</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+box-sizing:border-box;
+margin:0;
+padding:0
+}
 
 body{
 font-family:Arial,sans-serif;
@@ -25,7 +29,9 @@ top:0;
 z-index:100
 }
 
-header h1{font-size:22px}
+header h1{
+font-size:22px
+}
 
 main{
 max-width:1200px;
@@ -33,15 +39,21 @@ margin:auto;
 padding:20px
 }
 
-.bienvenida,.panel,#estadoConexion{
+.bienvenida,
+.panel,
+#estadoConexion{
 background:white;
 border-radius:12px;
 box-shadow:0 2px 8px rgba(0,0,0,.08)
 }
 
-.bienvenida{padding:22px}
+.bienvenida{
+padding:22px
+}
 
-.bienvenida h2{margin-bottom:8px}
+.bienvenida h2{
+margin-bottom:8px
+}
 
 .modulos{
 display:grid;
@@ -58,7 +70,9 @@ box-shadow:0 2px 8px rgba(0,0,0,.08);
 cursor:pointer
 }
 
-.modulo h3{margin-bottom:8px}
+.modulo h3{
+margin-bottom:8px
+}
 
 .modulo p{
 color:#64748b;
@@ -70,7 +84,9 @@ display:none;
 margin-top:25px
 }
 
-.panel{padding:20px}
+.panel{
+padding:20px
+}
 
 .panel-header{
 display:flex;
@@ -104,11 +120,11 @@ min-height:42px
 
 .btn-principal{
 background:#0f172a;
-color:#ffffff;
+color:#ffffff
 }
 
 .btn-principal:hover{
-background:#1e293b;
+background:#1e293b
 }
 
 .btn-secundario{
@@ -146,13 +162,16 @@ border-collapse:collapse;
 min-width:800px
 }
 
-th,td{
+th,
+td{
 padding:12px;
 border-bottom:1px solid #e2e8f0;
 text-align:left
 }
 
-th{background:#f8fafc}
+th{
+background:#f8fafc
+}
 
 #formularioCliente{
 display:none;
@@ -221,17 +240,25 @@ font-weight:bold
 
 @media(max-width:650px){
 
-main{padding:12px}
+main{
+padding:12px
+}
 
-.form-grid{grid-template-columns:1fr}
+.form-grid{
+grid-template-columns:1fr
+}
 
-.panel{padding:14px}
+.panel{
+padding:14px
+}
 
 .modulos{
 grid-template-columns:1fr 1fr
 }
 
-.modulo{padding:15px}
+.modulo{
+padding:15px
+}
 
 }
 </style>
@@ -247,55 +274,105 @@ grid-template-columns:1fr 1fr
 <main>
 
 <section class="bienvenida">
+
 <h2>Panel principal</h2>
-<p>Bienvenido al sistema empresarial.</p>
+
+<p>
+Bienvenido al sistema empresarial.
+</p>
+
 </section>
 
 <section class="modulos">
 
 <div class="modulo" onclick="abrirClientes()">
+
 <h3>👥 Clientes</h3>
-<p>Administración de clientes.</p>
+
+<p>
+Administración de clientes.
+</p>
+
 </div>
 
 <div class="modulo">
+
 <h3>🧾 Facturas</h3>
-<p>Administración de facturas.</p>
+
+<p>
+Administración de facturas.
+</p>
+
 </div>
 
 <div class="modulo">
+
 <h3>💰 Ingresos</h3>
-<p>Control de ingresos.</p>
+
+<p>
+Control de ingresos.
+</p>
+
 </div>
 
 <div class="modulo">
+
 <h3>💸 Egresos</h3>
-<p>Control de egresos y salarios.</p>
+
+<p>
+Control de egresos y salarios.
+</p>
+
 </div>
 
 <div class="modulo">
+
 <h3>🏦 Cheques</h3>
-<p>Control de cheques emitidos.</p>
+
+<p>
+Control de cheques emitidos.
+</p>
+
 </div>
 
 <div class="modulo">
+
 <h3>📋 Procesos del día</h3>
-<p>Seguimiento de procesos.</p>
+
+<p>
+Seguimiento de procesos.
+</p>
+
 </div>
 
 <div class="modulo">
+
 <h3>📁 Documentos</h3>
-<p>Documentos de la empresa.</p>
+
+<p>
+Documentos de la empresa.
+</p>
+
 </div>
 
 <div class="modulo">
+
 <h3>💵 Saldo en cuentas</h3>
-<p>Control financiero.</p>
+
+<p>
+Control financiero.
+</p>
+
 </div>
 
 <div class="modulo">
+
 <h3>⚙️ Configuración</h3>
-<p>Configuración del sistema.</p>
+
+<p>
+Configuración del sistema.
+</p>
+
 </div>
 
 </section>
@@ -306,7 +383,9 @@ grid-template-columns:1fr 1fr
 
 <div class="panel-header">
 
-<h2>👥 Clientes</h2>
+<h2>
+👥 Clientes
+</h2>
 
 <div>
 
@@ -314,14 +393,18 @@ grid-template-columns:1fr 1fr
 type="button"
 class="btn-secundario"
 onclick="cerrarClientes()">
+
 Volver
+
 </button>
 
 <button
 type="button"
 class="btn-principal"
 onclick="nuevoCliente()">
+
 ➕ Nuevo cliente
+
 </button>
 
 </div>
@@ -332,39 +415,79 @@ onclick="nuevoCliente()">
 
 <div id="formularioCliente">
 
-<h3 id="tituloFormulario">Nuevo cliente</h3>
+<h3 id="tituloFormulario">
+Nuevo cliente
+</h3>
 
 <br>
 
 <div class="form-grid">
 
 <div class="campo">
-<label>Empresa</label>
-<input type="text" id="empresa">
+
+<label>
+Empresa
+</label>
+
+<input
+type="text"
+id="empresa">
+
 </div>
 
 <div class="campo">
-<label>Área</label>
-<input type="text" id="area">
+
+<label>
+Área
+</label>
+
+<input
+type="text"
+id="area">
+
 </div>
 
 <div class="campo">
-<label>Nombre de contacto</label>
-<input type="text" id="nombreContacto">
+
+<label>
+Nombre de contacto
+</label>
+
+<input
+type="text"
+id="nombreContacto">
+
 </div>
 
 <div class="campo">
-<label>Teléfono</label>
-<input type="text" id="telefono">
+
+<label>
+Teléfono
+</label>
+
+<input
+type="text"
+id="telefono">
+
 </div>
 
 <div class="campo">
-<label>Correo electrónico</label>
-<input type="email" id="correo">
+
+<label>
+Correo electrónico
+</label>
+
+<input
+type="email"
+id="correo">
+
 </div>
 
 <div class="campo">
-<label>Estado</label>
+
+<label>
+Estado
+</label>
 
 <select id="estado">
 
@@ -388,14 +511,18 @@ Inactivo
 type="button"
 class="btn-principal"
 onclick="guardarCliente()">
+
 💾 Guardar cliente
+
 </button>
 
 <button
 type="button"
 class="btn-secundario"
 onclick="cancelarFormulario()">
+
 Cancelar
+
 </button>
 
 </div>
@@ -416,13 +543,21 @@ oninput="filtrarClientes()">
 <thead>
 
 <tr>
+
 <th>Empresa</th>
+
 <th>Área</th>
+
 <th>Contacto</th>
+
 <th>Teléfono</th>
+
 <th>Correo</th>
+
 <th>Estado</th>
+
 <th>Acciones</th>
+
 </tr>
 
 </thead>
@@ -438,7 +573,9 @@ oninput="filtrarClientes()">
 </section>
 
 <div id="estadoConexion">
+
 🔄 Conectando con Supabase...
+
 </div>
 
 </main>
@@ -450,8 +587,11 @@ oninput="filtrarClientes()">
 <script>
 
 let clienteSupabase;
+
 let clientes=[];
+
 let clienteEditando=null;
+
 
 
 async function iniciarSistema(){
@@ -459,7 +599,9 @@ async function iniciarSistema(){
 const estadoConexion=
 document.getElementById("estadoConexion");
 
+
 try{
+
 
 if(
 typeof SUPABASE_URL==="undefined" ||
@@ -473,17 +615,20 @@ return;
 
 }
 
+
 clienteSupabase=
 window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
 
+
 const resultado=
 await clienteSupabase
 .from("clientes")
 .select("id")
 .limit(1);
+
 
 if(resultado.error){
 
@@ -495,8 +640,10 @@ return;
 
 }
 
+
 estadoConexion.textContent=
 "🟢 Supabase conectado correctamente";
+
 
 }catch(error){
 
@@ -509,45 +656,57 @@ error.message;
 }
 
 
+
 function abrirClientes(){
+
 
 document
 .querySelector(".bienvenida")
 .style.display="none";
 
+
 document
 .querySelector(".modulos")
 .style.display="none";
 
+
 document
 .getElementById("clientesModulo")
 .style.display="block";
+
 
 cargarClientes();
 
 }
 
 
+
 function cerrarClientes(){
+
 
 document
 .getElementById("clientesModulo")
 .style.display="none";
 
+
 document
 .querySelector(".bienvenida")
 .style.display="block";
 
+
 document
 .querySelector(".modulos")
 .style.display="grid";
+
 
 cancelarFormulario();
 
 }
 
 
+
 async function cargarClientes(){
+
 
 if(!clienteSupabase){
 
@@ -560,17 +719,21 @@ return;
 
 }
 
+
 const lista=
 document.getElementById("listaClientes");
 
+
 lista.innerHTML=
 "<tr><td colspan='7'>Cargando clientes...</td></tr>";
+
 
 const resultado=
 await clienteSupabase
 .from("clientes")
 .select("*")
 .order("empresa",{ascending:true});
+
 
 if(resultado.error){
 
@@ -586,18 +749,23 @@ return;
 
 }
 
+
 clientes=
 resultado.data||[];
+
 
 mostrarClientes(clientes);
 
 }
 
 
+
 function mostrarClientes(datos){
+
 
 const lista=
 document.getElementById("listaClientes");
+
 
 if(datos.length===0){
 
@@ -608,12 +776,16 @@ return;
 
 }
 
+
 lista.innerHTML="";
+
 
 datos.forEach(cliente=>{
 
+
 const fila=
 document.createElement("tr");
+
 
 fila.innerHTML=`
 
@@ -647,19 +819,25 @@ ${escapar(cliente.estado||"Activo")}
 type="button"
 class="btn-editar"
 onclick="editarCliente('${escaparAtributo(cliente.id)}')">
+
 Editar
+
 </button>
+
 
 <button
 type="button"
 class="btn-eliminar"
 onclick="eliminarCliente('${escaparAtributo(cliente.id)}')">
+
 Eliminar
+
 </button>
 
 </td>
 
 `;
+
 
 lista.appendChild(fila);
 
@@ -668,13 +846,16 @@ lista.appendChild(fila);
 }
 
 
+
 function filtrarClientes(){
+
 
 const texto=
 document
 .getElementById("buscarCliente")
 .value
 .toLowerCase();
+
 
 const filtrados=
 clientes.filter(cliente=>
@@ -703,18 +884,23 @@ String(cliente.correo_electrónico||"")
 
 );
 
+
 mostrarClientes(filtrados);
 
 }
 
 
+
 function nuevoCliente(){
 
+
 clienteEditando=null;
+
 
 document
 .getElementById("tituloFormulario")
 .textContent="Nuevo cliente";
+
 
 document.getElementById("empresa").value="";
 
@@ -728,9 +914,11 @@ document.getElementById("correo").value="";
 
 document.getElementById("estado").value="Activo";
 
+
 document
 .getElementById("formularioCliente")
 .style.display="block";
+
 
 document
 .getElementById("empresa")
@@ -739,9 +927,12 @@ document
 }
 
 
+
 function cancelarFormulario(){
 
+
 clienteEditando=null;
+
 
 document
 .getElementById("formularioCliente")
@@ -750,42 +941,55 @@ document
 }
 
 
+
 function editarCliente(id){
+
 
 const cliente=
 clientes.find(
 c=>String(c.id)===String(id)
 );
 
+
 if(!cliente)return;
 
+
 clienteEditando=id;
+
 
 document
 .getElementById("tituloFormulario")
 .textContent="Editar cliente";
 
+
 document.getElementById("empresa").value=
 cliente.empresa||"";
+
 
 document.getElementById("area").value=
 cliente["área"]||"";
 
+
 document.getElementById("nombreContacto").value=
 cliente.nombre_contacto||"";
+
 
 document.getElementById("telefono").value=
 cliente["teléfono"]||"";
 
+
 document.getElementById("correo").value=
 cliente.correo_electrónico||"";
+
 
 document.getElementById("estado").value=
 cliente.estado||"Activo";
 
+
 document
 .getElementById("formularioCliente")
 .style.display="block";
+
 
 document
 .getElementById("empresa")
@@ -794,7 +998,9 @@ document
 }
 
 
+
 async function guardarCliente(){
+
 
 if(!clienteSupabase){
 
@@ -807,11 +1013,13 @@ return;
 
 }
 
+
 const empresa=
 document
 .getElementById("empresa")
 .value
 .trim();
+
 
 const area=
 document
@@ -819,11 +1027,13 @@ document
 .value
 .trim();
 
+
 const nombreContacto=
 document
 .getElementById("nombreContacto")
 .value
 .trim();
+
 
 const telefono=
 document
@@ -831,11 +1041,13 @@ document
 .value
 .trim();
 
+
 const correo=
 document
 .getElementById("correo")
 .value
 .trim();
+
 
 const estado=
 document
@@ -877,7 +1089,9 @@ let resultado;
 
 try{
 
+
 if(clienteEditando){
+
 
 resultado=
 await clienteSupabase
@@ -885,10 +1099,23 @@ await clienteSupabase
 .update(datos)
 .eq("id",clienteEditando);
 
+
 }else{
 
+
+/*
+Generamos un ID compatible
+sin utilizar crypto.randomUUID()
+*/
+
 datos.id=
-crypto.randomUUID();
+"cliente-" +
+Date.now() +
+"-" +
+Math.random()
+.toString(36)
+.substring(2,10);
+
 
 resultado=
 await clienteSupabase
@@ -923,9 +1150,12 @@ true
 
 );
 
+
 cancelarFormulario();
 
+
 await cargarClientes();
+
 
 }catch(error){
 
@@ -940,13 +1170,16 @@ false
 }
 
 
+
 async function eliminarCliente(id){
+
 
 if(
 !confirm(
 "¿Deseas eliminar este cliente?"
 )
 )return;
+
 
 if(!clienteSupabase){
 
@@ -959,7 +1192,9 @@ return;
 
 }
 
+
 try{
+
 
 const resultado=
 await clienteSupabase
@@ -986,7 +1221,9 @@ mostrarMensaje(
 true
 );
 
+
 await cargarClientes();
+
 
 }catch(error){
 
@@ -1001,12 +1238,16 @@ false
 }
 
 
+
 function mostrarMensaje(texto,exito){
+
 
 const mensaje=
 document.getElementById("mensaje");
 
+
 mensaje.textContent=texto;
+
 
 mensaje.className=
 exito
@@ -1015,7 +1256,9 @@ exito
 :
 "mensaje-error";
 
+
 mensaje.style.display="block";
+
 
 setTimeout(()=>{
 
@@ -1026,13 +1269,16 @@ mensaje.style.display="none";
 }
 
 
+
 function escapar(valor){
+
 
 if(
 valor===null||
 valor===undefined
 )
 return"";
+
 
 return String(valor)
 
@@ -1049,7 +1295,9 @@ return String(valor)
 }
 
 
+
 function escaparAtributo(valor){
+
 
 if(
 valor===null||
@@ -1057,10 +1305,14 @@ valor===undefined
 )
 return"";
 
+
 return String(valor)
+
 .replace(/\\/g,"\\\\")
 .replace(/'/g,"\\'");
+
 }
+
 
 
 iniciarSistema();
