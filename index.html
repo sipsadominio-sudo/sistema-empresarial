@@ -145,7 +145,21 @@
             SUPABASE_KEY
         );
 
-        console.log("Supabase conectado correctamente");
+        async function probarConexion() {
+    const { data, error } = await supabaseClient
+        .from("clientes")
+        .select("id")
+        .limit(1);
+
+    if (error) {
+        console.error("Error de conexión con Supabase:", error);
+        return;
+    }
+
+    console.log("Supabase conectado correctamente:", data);
+}
+
+probarConexion();
     </script>
 
 </body>
