@@ -2,6 +2,7 @@
 
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f172a">
@@ -125,6 +126,15 @@ background:#e2e8f0;
 color:#0f172a
 }
 
+.btn-excel{
+background:#0f172a;
+color:white
+}
+
+.btn-excel:hover{
+background:#1e293b
+}
+
 .buscar{
 width:100%;
 padding:12px;
@@ -173,11 +183,20 @@ background:#fee2e2;
 color:#991b1b
 }
 
+.mensaje-info{
+background:#e0f2fe;
+color:#075985
+}
+
 #estadoConexion{
 margin-top:20px;
 padding:15px;
 text-align:center;
 font-weight:bold
+}
+
+#archivoExcel{
+display:none
 }
 
 @media(max-width:650px){
@@ -196,6 +215,14 @@ grid-template-columns:1fr 1fr
 
 .modulo{
 padding:15px
+}
+
+.panel-header>div{
+width:100%
+}
+
+.panel-header button{
+width:100%
 }
 
 }
@@ -233,7 +260,7 @@ Bienvenido al sistema empresarial.
 <h3>👥 Clientes</h3>
 
 <p>
-Consulta de clientes.
+Consulta y actualización de clientes.
 </p>
 
 </div>
@@ -345,6 +372,15 @@ Configuración del sistema.
 
 <button
 type="button"
+class="btn-excel"
+onclick="seleccionarExcel()">
+
+📊 Cargar / actualizar Excel
+
+</button>
+
+<button
+type="button"
 class="btn-secundario"
 onclick="cerrarClientes()">
 
@@ -357,6 +393,13 @@ Volver
 </div>
 
 
+<input
+type="file"
+id="archivoExcel"
+accept=".xlsx,.xls"
+onchange="procesarExcel(event)">
+
+
 <div id="mensaje"></div>
 
 
@@ -365,7 +408,7 @@ type="text"
 id="buscarCliente"
 class="buscar"
 placeholder="🔎 Buscar por empresa, contacto, teléfono o correo..."
-oninput="filtrarClientes()">
+oninput="filtrarClientes">
 
 
 <div class="tabla-contenedor">
@@ -415,7 +458,15 @@ oninput="filtrarClientes()">
 </main>
 
 
+<!-- Supabase -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<!-- Lector de archivos Excel -->
+
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
 
 <script src="supabase-config.js"></script>
 
@@ -428,31 +479,28 @@ let clienteSupabase;
 let clientes=[];
 
 
+/* =========================================
+   INICIAR SISTEMA
+========================================= */
 
 async function iniciarSistema(){
-
 
 const estadoConexion=
 document.getElementById("estadoConexion");
 
-
 try{
-
 
 if(
 typeof SUPABASE_URL==="undefined" ||
 typeof SUPABASE_KEY==="undefined"
 ){
 
-
 estadoConexion.textContent=
 "🔴 No se encontró la configuración de Supabase.";
-
 
 return;
 
 }
-
 
 clienteSupabase=
 window.supabase.createClient(
@@ -470,11 +518,9 @@ await clienteSupabase
 
 if(resultado.error){
 
-
 estadoConexion.textContent=
 "🔴 Error de Supabase: "+
 resultado.error.message;
-
 
 return;
 
@@ -487,7 +533,6 @@ estadoConexion.textContent=
 
 }catch(error){
 
-
 estadoConexion.textContent=
 "🔴 Error: "+
 error.message;
@@ -497,43 +542,38 @@ error.message;
 }
 
 
+/* =========================================
+   CLIENTES
+========================================= */
 
 function abrirClientes(){
-
 
 document
 .querySelector(".bienvenida")
 .style.display="none";
 
-
 document
 .querySelector(".modulos")
 .style.display="none";
 
-
 document
 .getElementById("clientesModulo")
 .style.display="block";
-
 
 cargarClientes();
 
 }
 
 
-
 function cerrarClientes(){
-
 
 document
 .getElementById("clientesModulo")
 .style.display="none";
 
-
 document
 .querySelector(".bienvenida")
 .style.display="block";
-
 
 document
 .querySelector(".modulos")
@@ -542,18 +582,18 @@ document
 }
 
 
+/* =========================================
+   CARGAR CLIENTES DESDE SUPABASE
+========================================= */
 
 async function cargarClientes(){
 
-
 if(!clienteSupabase){
-
 
 mostrarMensaje(
 "Supabase todavía no está conectado.",
 false
 );
-
 
 return;
 
@@ -577,16 +617,13 @@ await clienteSupabase
 
 if(resultado.error){
 
-
 mostrarMensaje(
 "Error al cargar clientes: "+
 resultado.error.message,
 false
 );
 
-
 lista.innerHTML="";
-
 
 return;
 
@@ -602,9 +639,11 @@ mostrarClientes(clientes);
 }
 
 
+/* =========================================
+   MOSTRAR CLIENTES
+========================================= */
 
 function mostrarClientes(datos){
-
 
 const lista=
 document.getElementById("listaClientes");
@@ -612,10 +651,8 @@ document.getElementById("listaClientes");
 
 if(datos.length===0){
 
-
 lista.innerHTML=
 "<tr><td colspan='6'>No hay clientes registrados.</td></tr>";
-
 
 return;
 
@@ -626,7 +663,6 @@ lista.innerHTML="";
 
 
 datos.forEach(cliente=>{
-
 
 const fila=
 document.createElement("tr");
@@ -639,7 +675,7 @@ ${escapar(cliente.empresa)}
 </td>
 
 <td>
-${escapar(cliente["área"])}
+${escapar(cliente.area)}
 </td>
 
 <td>
@@ -647,11 +683,11 @@ ${escapar(cliente.nombre_contacto)}
 </td>
 
 <td>
-${escapar(cliente["teléfono"])}
+${escapar(cliente.telefono)}
 </td>
 
 <td>
-${escapar(cliente["correo_electrónico"])}
+${escapar(cliente.correo_electronico)}
 </td>
 
 <td>
@@ -668,9 +704,11 @@ lista.appendChild(fila);
 }
 
 
+/* =========================================
+   FILTRO
+========================================= */
 
 function filtrarClientes(){
-
 
 const texto=
 document
@@ -680,47 +718,41 @@ document
 
 
 const filtrados=
-clientes.filter(cliente=>
+clientes.filter(cliente=>{
 
+return (
 
 String(cliente.empresa||"")
 .toLowerCase()
 .includes(texto)
 
-
 ||
-
 
 String(cliente.nombre_contacto||"")
 .toLowerCase()
 .includes(texto)
 
-
 ||
 
-
-String(cliente["teléfono"]||"")
+String(cliente.telefono||"")
 .toLowerCase()
 .includes(texto)
 
-
 ||
 
-
-String(cliente["correo_electrónico"]||"")
+String(cliente.correo_electronico||"")
 .toLowerCase()
 .includes(texto)
 
-
 ||
 
-
-String(cliente["área"]||"")
+String(cliente.area||"")
 .toLowerCase()
 .includes(texto)
-
 
 );
+
+});
 
 
 mostrarClientes(filtrados);
@@ -728,9 +760,658 @@ mostrarClientes(filtrados);
 }
 
 
+/* =========================================
+   BOTÓN PARA SELECCIONAR EXCEL
+========================================= */
 
-function mostrarMensaje(texto,exito){
+function seleccionarExcel(){
 
+const archivo=
+document.getElementById("archivoExcel");
+
+archivo.value="";
+
+archivo.click();
+
+}
+
+
+/* =========================================
+   PROCESAR EXCEL
+========================================= */
+
+async function procesarExcel(event){
+
+const archivo=
+event.target.files[0];
+
+
+if(!archivo){
+
+return;
+
+}
+
+
+if(!clienteSupabase){
+
+mostrarMensaje(
+"Supabase todavía no está conectado.",
+false
+);
+
+return;
+
+}
+
+
+try{
+
+mostrarMensaje(
+"⏳ Leyendo el archivo Excel...",
+"info"
+);
+
+
+const datos=
+await archivo.arrayBuffer();
+
+
+const libro=
+XLSX.read(datos,{
+type:"array"
+});
+
+
+if(!libro.SheetNames.includes("EMPRESAS")){
+
+mostrarMensaje(
+"El archivo no contiene la hoja EMPRESAS.",
+false
+);
+
+return;
+
+}
+
+
+const hoja=
+libro.Sheets["EMPRESAS"];
+
+
+const filas=
+XLSX.utils.sheet_to_json(
+hoja,
+{
+header:1,
+defval:""
+}
+);
+
+
+if(filas.length<2){
+
+mostrarMensaje(
+"La hoja EMPRESAS no contiene clientes.",
+false
+);
+
+return;
+
+}
+
+
+const encabezados=
+filas[0].map(
+encabezado=>
+normalizarTexto(encabezado)
+);
+
+
+const indiceEmpresa=
+buscarColumna(
+encabezados,
+["empresa"]
+);
+
+
+const indiceArea=
+buscarColumna(
+encabezados,
+["area"]
+);
+
+
+const indiceContacto=
+buscarColumna(
+encabezados,
+[
+"nombre del colaborador",
+"nombre colaborador",
+"nombre contacto"
+]
+);
+
+
+const indiceTelefono=
+buscarColumna(
+encabezados,
+["telefono"]
+);
+
+
+const indiceCorreo=
+buscarColumna(
+encabezados,
+[
+"correo electronico",
+"correo"
+]
+);
+
+
+if(indiceEmpresa===-1){
+
+mostrarMensaje(
+"No se encontró la columna Empresa en la hoja EMPRESAS.",
+false
+);
+
+return;
+
+}
+
+
+if(indiceArea===-1){
+
+mostrarMensaje(
+"No se encontró la columna área en la hoja EMPRESAS.",
+false
+);
+
+return;
+
+}
+
+
+if(indiceContacto===-1){
+
+mostrarMensaje(
+"No se encontró la columna nombre del colaborador.",
+false
+);
+
+return;
+
+}
+
+
+if(indiceTelefono===-1){
+
+mostrarMensaje(
+"No se encontró la columna teléfono.",
+false
+);
+
+return;
+
+}
+
+
+if(indiceCorreo===-1){
+
+mostrarMensaje(
+"No se encontró la columna correo electrónico.",
+false
+);
+
+return;
+
+}
+
+
+/* =========================================
+   PREPARAR CLIENTES
+========================================= */
+
+const registros=[];
+
+
+for(
+let i=1;
+i<filas.length;
+i++
+){
+
+const fila=
+filas[i];
+
+
+const empresa=
+String(
+fila[indiceEmpresa]||""
+).trim();
+
+
+const area=
+String(
+fila[indiceArea]||""
+).trim();
+
+
+const contacto=
+String(
+fila[indiceContacto]||""
+).trim();
+
+
+const telefono=
+String(
+fila[indiceTelefono]||""
+).trim();
+
+
+const correo=
+String(
+fila[indiceCorreo]||""
+).trim();
+
+
+/*
+   Si la fila está completamente vacía,
+   no se importa.
+*/
+
+if(
+!empresa &&
+!area &&
+!contacto &&
+!telefono &&
+!correo
+){
+
+continue;
+
+}
+
+
+/*
+   La fila de Excel comienza en 2
+   porque la fila 1 contiene encabezados.
+*/
+
+const numeroFila=
+i+1;
+
+
+/*
+   Identificador estable para esa fila
+   del Excel.
+*/
+
+const excelRowKey=
+"EMPRESAS-"+numeroFila;
+
+
+registros.push({
+
+excel_row_key:excelRowKey,
+
+empresa:empresa,
+
+area:area,
+
+nombre_contacto:contacto,
+
+telefono:telefono,
+
+correo_electronico:correo,
+
+estado:"activo"
+
+});
+
+}
+
+
+/* =========================================
+   VALIDAR
+========================================= */
+
+if(registros.length===0){
+
+mostrarMensaje(
+"No se encontraron clientes para importar.",
+false
+);
+
+return;
+
+}
+
+
+mostrarMensaje(
+"⏳ Actualizando "+
+registros.length+
+" clientes en Supabase...",
+"info"
+);
+
+
+/* =========================================
+   OBTENER REGISTROS EXISTENTES
+========================================= */
+
+const existentesResultado=
+await clienteSupabase
+.from("clientes")
+.select(
+"id,excel_row_key"
+);
+
+
+if(existentesResultado.error){
+
+mostrarMensaje(
+"Error consultando clientes existentes: "+
+existentesResultado.error.message,
+false
+);
+
+return;
+
+}
+
+
+const existentes=
+existentesResultado.data||[];
+
+
+const mapaExistentes=
+new Map();
+
+
+existentes.forEach(cliente=>{
+
+if(cliente.excel_row_key){
+
+mapaExistentes.set(
+String(cliente.excel_row_key),
+cliente.id
+);
+
+}
+
+});
+
+
+/* =========================================
+   INSERTAR / ACTUALIZAR
+========================================= */
+
+let nuevos=0;
+
+let actualizados=0;
+
+let errores=0;
+
+
+for(const registro of registros){
+
+try{
+
+
+const idExistente=
+mapaExistentes.get(
+registro.excel_row_key
+);
+
+
+if(idExistente){
+
+/*
+   El cliente ya existe.
+   Actualizamos sus datos.
+*/
+
+const resultado=
+await clienteSupabase
+.from("clientes")
+.update({
+
+empresa:registro.empresa,
+
+area:registro.area,
+
+nombre_contacto:
+registro.nombre_contacto,
+
+telefono:
+registro.telefono,
+
+correo_electronico:
+registro.correo_electronico,
+
+estado:
+registro.estado,
+
+updated_at:
+new Date().toISOString()
+
+})
+.eq(
+"id",
+idExistente
+);
+
+
+if(resultado.error){
+
+throw resultado.error;
+
+}
+
+
+actualizados++;
+
+
+}else{
+
+/*
+   Cliente nuevo.
+   Generamos un ID sin utilizar
+   crypto.randomUUID(), para evitar
+   el error que ya tuvimos anteriormente.
+*/
+
+const nuevoId=
+generarId();
+
+
+const resultado=
+await clienteSupabase
+.from("clientes")
+.insert({
+
+id:nuevoId,
+
+excel_row_key:
+registro.excel_row_key,
+
+empresa:
+registro.empresa,
+
+area:
+registro.area,
+
+nombre_contacto:
+registro.nombre_contacto,
+
+telefono:
+registro.telefono,
+
+correo_electronico:
+registro.correo_electronico,
+
+estado:
+registro.estado
+
+});
+
+
+if(resultado.error){
+
+throw resultado.error;
+
+}
+
+
+nuevos++;
+
+}
+
+}catch(error){
+
+console.error(
+"Error procesando registro:",
+registro,
+error
+);
+
+errores++;
+
+}
+
+}
+
+
+/* =========================================
+   RESULTADO
+========================================= */
+
+if(errores>0){
+
+mostrarMensaje(
+
+"⚠️ Proceso terminado. "+
+"Clientes nuevos: "+
+nuevos+
+". Actualizados: "+
+actualizados+
+". Errores: "+
+errores+
+". Revisa la consola si necesitamos localizar el problema.",
+
+false
+
+);
+
+}else{
+
+mostrarMensaje(
+
+"✅ Excel procesado correctamente. "+
+"Nuevos: "+
+nuevos+
+". Actualizados: "+
+actualizados+
+".",
+
+true
+
+);
+
+}
+
+
+/*
+   Volver a cargar desde Supabase
+   para mostrar inmediatamente
+   los datos actualizados.
+*/
+
+await cargarClientes();
+
+}
+
+
+/* =========================================
+   NORMALIZAR ENCABEZADOS
+========================================= */
+
+function normalizarTexto(texto){
+
+return String(texto||"")
+
+.toLowerCase()
+
+.normalize("NFD")
+
+.replace(/[\u0300-\u036f]/g,"")
+
+.trim();
+
+}
+
+
+/* =========================================
+   BUSCAR COLUMNA
+========================================= */
+
+function buscarColumna(
+encabezados,
+posiblesNombres
+){
+
+for(
+let i=0;
+i<encabezados.length;
+i++
+){
+
+if(
+posiblesNombres.includes(
+encabezados[i]
+)
+){
+
+return i;
+
+}
+
+}
+
+return -1;
+
+}
+
+
+/* =========================================
+   GENERAR ID
+========================================= */
+
+function generarId(){
+
+return (
+"CLI-"+
+Date.now().toString(36)+
+"-"+
+Math.random()
+.toString(36)
+.substring(2,10)
+).toUpperCase();
+
+}
+
+
+/* =========================================
+   MENSAJES
+========================================= */
+
+function mostrarMensaje(
+texto,
+exito
+){
 
 const mensaje=
 document.getElementById("mensaje");
@@ -739,6 +1420,13 @@ document.getElementById("mensaje");
 mensaje.textContent=texto;
 
 
+if(exito==="info"){
+
+mensaje.className=
+"mensaje-info";
+
+}else{
+
 mensaje.className=
 exito
 ?
@@ -746,57 +1434,61 @@ exito
 :
 "mensaje-error";
 
+}
+
 
 mensaje.style.display="block";
 
 
-setTimeout(()=>{
+if(exito!=="info"){
 
+setTimeout(()=>{
 
 mensaje.style.display="none";
 
+},7000);
 
-},5000);
+}
 
 }
 
 
+/* =========================================
+   ESCAPAR HTML
+========================================= */
 
 function escapar(valor){
-
 
 if(
 valor===null||
 valor===undefined
-)
-
+){
 
 return"";
+
+}
 
 
 return String(valor)
 
-
 .replace(/&/g,"&amp;")
-
 
 .replace(/</g,"&lt;")
 
-
 .replace(/>/g,"&gt;")
 
-
 .replace(/"/g,"&quot;")
-
 
 .replace(/'/g,"&#039;");
 
 }
 
 
+/* =========================================
+   INICIAR
+========================================= */
 
 iniciarSistema();
-
 
 </script>
 
