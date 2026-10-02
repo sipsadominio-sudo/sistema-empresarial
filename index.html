@@ -81,17 +81,34 @@ margin-bottom:20px;
 flex-wrap:wrap
 }
 
+.panel-header>div{
+display:flex;
+gap:10px;
+align-items:center;
+flex-wrap:wrap
+}
+
 button{
 border:0;
 border-radius:8px;
 padding:11px 16px;
 cursor:pointer;
-font-weight:bold
+font-weight:bold;
+font-family:Arial,sans-serif;
+font-size:14px;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+min-height:42px
 }
 
 .btn-principal{
 background:#0f172a;
-color:white
+color:#ffffff;
+}
+
+.btn-principal:hover{
+background:#1e293b;
 }
 
 .btn-secundario{
@@ -294,16 +311,18 @@ grid-template-columns:1fr 1fr
 <div>
 
 <button
+type="button"
 class="btn-secundario"
 onclick="cerrarClientes()">
 Volver
 </button>
 
 <button
+type="button"
 class="btn-principal"
 onclick="nuevoCliente()">
-
-
+➕ Nuevo cliente
+</button>
 
 </div>
 
@@ -366,12 +385,14 @@ Inactivo
 <div class="botones-formulario">
 
 <button
+type="button"
 class="btn-principal"
 onclick="guardarCliente()">
-Guardar cliente
+💾 Guardar cliente
 </button>
 
 <button
+type="button"
 class="btn-secundario"
 onclick="cancelarFormulario()">
 Cancelar
@@ -395,7 +416,6 @@ oninput="filtrarClientes()">
 <thead>
 
 <tr>
-
 <th>Empresa</th>
 <th>Área</th>
 <th>Contacto</th>
@@ -403,7 +423,6 @@ oninput="filtrarClientes()">
 <th>Correo</th>
 <th>Estado</th>
 <th>Acciones</th>
-
 </tr>
 
 </thead>
@@ -431,9 +450,7 @@ oninput="filtrarClientes()">
 <script>
 
 let clienteSupabase;
-
 let clientes=[];
-
 let clienteEditando=null;
 
 
@@ -443,6 +460,18 @@ const estadoConexion=
 document.getElementById("estadoConexion");
 
 try{
+
+if(
+typeof SUPABASE_URL==="undefined" ||
+typeof SUPABASE_KEY==="undefined"
+){
+
+estadoConexion.textContent=
+"🔴 No se encontró la configuración de Supabase.";
+
+return;
+
+}
 
 clienteSupabase=
 window.supabase.createClient(
@@ -519,6 +548,17 @@ cancelarFormulario();
 
 
 async function cargarClientes(){
+
+if(!clienteSupabase){
+
+mostrarMensaje(
+"Supabase todavía no está conectado.",
+false
+);
+
+return;
+
+}
 
 const lista=
 document.getElementById("listaClientes");
@@ -604,14 +644,16 @@ ${escapar(cliente.estado||"Activo")}
 <td>
 
 <button
+type="button"
 class="btn-editar"
-onclick="editarCliente('${cliente.id}')">
+onclick="editarCliente('${escaparAtributo(cliente.id)}')">
 Editar
 </button>
 
 <button
+type="button"
 class="btn-eliminar"
-onclick="eliminarCliente('${cliente.id}')">
+onclick="eliminarCliente('${escaparAtributo(cliente.id)}')">
 Eliminar
 </button>
 
@@ -690,6 +732,10 @@ document
 .getElementById("formularioCliente")
 .style.display="block";
 
+document
+.getElementById("empresa")
+.focus();
+
 }
 
 
@@ -741,10 +787,25 @@ document
 .getElementById("formularioCliente")
 .style.display="block";
 
+document
+.getElementById("empresa")
+.focus();
+
 }
 
 
 async function guardarCliente(){
+
+if(!clienteSupabase){
+
+mostrarMensaje(
+"Supabase todavía no está conectado.",
+false
+);
+
+return;
+
+}
 
 const empresa=
 document
@@ -814,6 +875,8 @@ estado:estado
 let resultado;
 
 
+try{
+
 if(clienteEditando){
 
 resultado=
@@ -864,6 +927,16 @@ cancelarFormulario();
 
 await cargarClientes();
 
+}catch(error){
+
+mostrarMensaje(
+"Error al guardar: "+
+error.message,
+false
+);
+
+}
+
 }
 
 
@@ -875,6 +948,18 @@ if(
 )
 )return;
 
+if(!clienteSupabase){
+
+mostrarMensaje(
+"Supabase todavía no está conectado.",
+false
+);
+
+return;
+
+}
+
+try{
 
 const resultado=
 await clienteSupabase
@@ -903,6 +988,16 @@ true
 
 await cargarClientes();
 
+}catch(error){
+
+mostrarMensaje(
+"Error al eliminar: "+
+error.message,
+false
+);
+
+}
+
 }
 
 
@@ -926,7 +1021,7 @@ setTimeout(()=>{
 
 mensaje.style.display="none";
 
-},4000);
+},5000);
 
 }
 
@@ -951,6 +1046,20 @@ return String(valor)
 
 .replace(/'/g,"&#039;");
 
+}
+
+
+function escaparAtributo(valor){
+
+if(
+valor===null||
+valor===undefined
+)
+return"";
+
+return String(valor)
+.replace(/\\/g,"\\\\")
+.replace(/'/g,"\\'");
 }
 
 
