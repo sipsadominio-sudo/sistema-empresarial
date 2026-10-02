@@ -77,6 +77,7 @@
             box-shadow: 0 2px 8px rgba(0,0,0,.08);
             font-weight: bold;
             text-align: center;
+            line-height: 1.5;
         }
     </style>
 </head>
@@ -159,23 +160,19 @@
 
         try {
 
-            if (
-                typeof SUPABASE_URL === "undefined" ||
-                typeof SUPABASE_KEY === "undefined"
-            ) {
+            estado.textContent = "🔄 Verificando configuración...";
+
+            if (typeof SUPABASE_URL === "undefined") {
                 estado.textContent =
-                    "🔴 No se encontraron las credenciales de Supabase.";
+                    "🔴 Error: no se encontró SUPABASE_URL.";
                 return;
             }
 
-            const cliente = window.supabase.createClient(
-                SUPABASE_URL,
-                SUPABASE_KEY
-            );
+            if (typeof SUPABASE_KEY === "undefined") {
+                estado.textContent =
+                    "🔴 Error: no se encontró SUPABASE_KEY.";
+                return;
+            }
 
-            const resultado = await cliente
-                .from("clientes")
-                .select("id")
-                .limit(1);
-
-            if (re
+            if (
+                typeof window.supabase === "undefined" ||
