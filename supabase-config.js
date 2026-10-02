@@ -1,2 +1,2 @@
-const SUPABASE_URL = "PEGA_AQUI_TU_API_URL";
-const SUPABASE_KEY = "PEGA_AQUI_TU_PUBLISHABLE_KEY";
+const SUPABASE_URL = "https://fyntemgivcsycuyhpsyz.supabase.co/rest/v1/";
+const SUPABASE_KEY = "sb_publishable_zs3ngI95Bne4tKFtWtszbA_tk7WrH9l";
