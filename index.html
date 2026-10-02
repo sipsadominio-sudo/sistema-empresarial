@@ -145,34 +145,22 @@
     </section>
 
     <div id="estadoConexion">
-        🔄 Comprobando conexión con Supabase...
+        🟡 PRUEBA NUEVA: cargando...
     </div>
 
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
-
 <script>
-    async function comprobarConexion() {
+    const estado = document.getElementById("estadoConexion");
 
-        const estado = document.getElementById("estadoConexion");
+    estado.textContent = "🟡 JavaScript funcionando. Iniciando prueba...";
 
-        try {
+    setTimeout(function() {
 
-            estado.textContent = "🔄 Verificando configuración...";
+        estado.textContent = "🟢 JavaScript funcionando correctamente.";
 
-            if (typeof SUPABASE_URL === "undefined") {
-                estado.textContent =
-                    "🔴 Error: no se encontró SUPABASE_URL.";
-                return;
-            }
+    }, 1000);
+</script>
 
-            if (typeof SUPABASE_KEY === "undefined") {
-                estado.textContent =
-                    "🔴 Error: no se encontró SUPABASE_KEY.";
-                return;
-            }
-
-            if (
-                typeof window.supabase === "undefined" ||
+</body>
+</html>
