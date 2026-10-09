@@ -1,1411 +1,1204 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f172a">
-
-<title>Sistema Empresarial</title>
+<title>Sistema Empresarial SIPSA</title>
 
 <style>
-
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-body{
-font-family:Arial,sans-serif;
-background:#f1f5f9;
-color:#0f172a;
+body {
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #0f172a;
 }
 
-header{
-background:#0f172a;
-color:white;
-padding:18px 20px;
-position:sticky;
-top:0;
-z-index:100;
+header {
+    background: #0f172a;
+    color: white;
+    padding: 18px 20px;
 }
 
-header h1{
-font-size:22px;
+header h1 {
+    font-size: 23px;
 }
 
-main{
-max-width:1200px;
-margin:auto;
-padding:20px;
+main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
 }
 
 .bienvenida,
 .panel,
-#estadoConexion{
-background:white;
-border-radius:12px;
-box-shadow:0 2px 8px rgba(0,0,0,.08);
+.modulo,
+#conexionPanel,
+#estadoConexion {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
 }
 
-.bienvenida{
-padding:22px;
+.bienvenida {
+    padding: 22px;
+    margin-bottom: 20px;
 }
 
-.bienvenida h2{
-margin-bottom:8px;
+.bienvenida h2 {
+    margin-bottom: 8px;
 }
 
-.modulos{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:15px;
-margin-top:20px;
+.modulos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
 }
 
-.modulo{
-background:white;
-padding:20px;
-border-radius:12px;
-box-shadow:0 2px 8px rgba(0,0,0,.08);
-cursor:pointer;
+.modulo {
+    padding: 20px;
+    cursor: pointer;
+    transition: transform .15s;
 }
 
-.modulo h3{
-margin-bottom:8px;
+.modulo:hover {
+    transform: translateY(-2px);
 }
 
-.modulo p{
-color:#64748b;
-font-size:14px;
+.modulo h3 {
+    margin-bottom: 8px;
 }
 
-#clientesModulo{
-display:none;
-margin-top:25px;
+.modulo p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
-.panel{
-padding:20px;
+.panel {
+    padding: 20px;
 }
 
-.panel-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px;
-margin-bottom:20px;
-flex-wrap:wrap;
+#clientesModulo {
+    display: none;
+    margin-top: 20px;
 }
 
-.panel-header>div{
-display:flex;
-gap:10px;
-align-items:center;
-flex-wrap:wrap;
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
-button{
-border:0;
-border-radius:8px;
-padding:11px 16px;
-cursor:pointer;
-font-weight:bold;
-font-family:Arial,sans-serif;
-font-size:14px;
-display:inline-flex;
-align-items:center;
-justify-content:center;
-min-height:42px;
+.panel-header > div {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-.btn-secundario{
-background:#e2e8f0;
-color:#0f172a;
+button {
+    border: 0;
+    border-radius: 8px;
+    padding: 11px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    min-height: 42px;
 }
 
-.btn-excel{
-background:#0f172a;
-color:white;
+button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
 }
 
-.btn-excel:hover{
-background:#1e293b;
+.btn-principal {
+    background: #1d4ed8;
+    color: white;
 }
 
-.buscar{
-width:100%;
-padding:12px;
-border:1px solid #cbd5e1;
-border-radius:8px;
-margin-bottom:15px;
-font-size:15px;
+.btn-excel {
+    background: #0f172a;
+    color: white;
 }
 
-.tabla-contenedor{
-width:100%;
-overflow-x:auto;
+.btn-secundario {
+    background: #e2e8f0;
+    color: #0f172a;
 }
 
-table{
-width:100%;
-border-collapse:collapse;
-min-width:750px;
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-size: 15px;
 }
 
-th,
-td{
-padding:12px;
-border-bottom:1px solid #e2e8f0;
-text-align:left;
+label {
+    display: block;
+    font-weight: bold;
+    margin: 10px 0 7px;
 }
 
-th{
-background:#f8fafc;
+.buscar {
+    margin-top: 10px;
 }
 
-#mensaje{
-margin-bottom:15px;
-padding:12px;
-border-radius:8px;
-display:none;
+.tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 15px;
 }
 
-.mensaje-exito{
-background:#dcfce7;
-color:#166534;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 750px;
+    background: white;
 }
 
-.mensaje-error{
-background:#fee2e2;
-color:#991b1b;
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+    font-size: 14px;
 }
 
-.mensaje-info{
-background:#e0f2fe;
-color:#075985;
+th {
+    background: #f8fafc;
 }
 
-#estadoConexion{
-margin-top:20px;
-padding:15px;
-text-align:center;
-font-weight:bold;
+#mensaje {
+    display: none;
+    margin: 12px 0;
+    padding: 12px;
+    border-radius: 8px;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
 }
 
-#archivoExcel{
-display:none;
+.mensaje-exito {
+    background: #dcfce7;
+    color: #166534;
 }
 
-@media(max-width:650px){
-
-main{
-padding:12px;
+.mensaje-error {
+    background: #fee2e2;
+    color: #991b1b;
 }
 
-.panel{
-padding:14px;
+.mensaje-info {
+    background: #e0f2fe;
+    color: #075985;
 }
 
-.modulos{
-grid-template-columns:1fr 1fr;
+#estadoConexion {
+    margin-top: 20px;
+    padding: 15px;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
 }
 
-.modulo{
-padding:15px;
+.oculto {
+    display: none !important;
 }
 
-.panel-header>div{
-width:100%;
+.nota {
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 8px 0 15px;
 }
 
-.panel-header button{
-width:100%;
+.seccion-modulo {
+    display: none;
+    margin-top: 20px;
 }
 
+.seccion-modulo h2 {
+    margin-bottom: 12px;
 }
 
+.pie {
+    text-align: center;
+    color: #64748b;
+    font-size: 12px;
+    padding: 20px;
+}
+
+@media (max-width: 650px) {
+    main {
+        padding: 12px;
+    }
+
+    .panel {
+        padding: 14px;
+    }
+
+    .modulos {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .modulo {
+        padding: 14px;
+    }
+
+    .panel-header > div {
+        width: 100%;
+    }
+
+    .panel-header button {
+        width: 100%;
+    }
+}
 </style>
-
 </head>
 
 <body>
 
 <header>
-
-<h1>Sistema Empresarial</h1>
-
+    <h1>SIPSA | Sistema Empresarial</h1>
 </header>
 
 <main>
 
 <section class="bienvenida">
+    <h2>Panel principal</h2>
+    <p>Bienvenido al sistema empresarial de SIPSA.</p>
+</section>
 
-<h2>Panel principal</h2>
+<section class="modulos" id="menuModulos">
 
-<p>
-Bienvenido al sistema empresarial.
-</p>
+    <div class="modulo" onclick="abrirClientes()">
+        <h3>👥 Clientes</h3>
+        <p>Consulta y actualización de clientes desde Excel.</p>
+    </div>
+
+    <div class="modulo" onclick="mostrarModulo('facturas')">
+        <h3>🧾 Facturas</h3>
+        <p>Administración de facturas.</p>
+    </div>
+
+    <div class="modulo" onclick="mostrarModulo('ingresos')">
+        <h3>💰 Ingresos</h3>
+        <p>Control de ingresos y pagos.</p>
+    </div>
+
+    <div class="modulo" onclick="mostrarModulo('egresos')">
+        <h3>💸 Egresos</h3>
+        <p>Control de gastos y salarios.</p>
+    </div>
+
+    <div class="modulo" onclick="mostrarModulo('cheques')">
+        <h3>🏦 Cheques</h3>
+        <p>Control de cheques emitidos.</p>
+    </div>
+
+    <div class="modulo" onclick="mostrarModulo('procesos')">
+        <h3>📋 Procesos del día</h3>
+        <p>Seguimiento de procesos empresariales.</p>
+    </div>
+
+    <div class="modulo" onclick="mostrarModulo('documentos')">
+        <h3>📁 Documentos</h3>
+        <p>Documentos importantes de la empresa.</p>
+    </div>
+
+    <div class="modulo" onclick="mostrarModulo('cuentas')">
+        <h3>💵 Saldo en cuentas</h3>
+        <p>Consulta de saldos financieros.</p>
+    </div>
+
+    <div class="modulo" onclick="mostrarModulo('configuracion')">
+        <h3>⚙️ Configuración</h3>
+        <p>Configuración del sistema.</p>
+    </div>
 
 </section>
 
-<section class="modulos">
+<section id="clientesModulo" class="panel seccion-modulo">
 
-<div class="modulo" onclick="abrirClientes()">
+    <div class="panel-header">
+        <h2>👥 Clientes</h2>
 
-<h3>👥 Clientes</h3>
+        <div>
+            <button type="button" class="btn-excel" onclick="seleccionarExcel()">
+                Cargar / actualizar Excel
+            </button>
 
-<p>
-Consulta y actualización de clientes.
-</p>
+            <button type="button" class="btn-secundario" onclick="volverInicio()">
+                Volver
+            </button>
+        </div>
+    </div>
 
-</div>
+    <p class="nota">
+        Selecciona tu archivo CONTROL SIPSA 2025 - 2026.xlsx.
+        El sistema leerá la hoja EMPRESAS y actualizará los clientes.
+    </p>
 
-<div class="modulo">
+    <input
+        type="file"
+        id="archivoExcel"
+        accept=".xlsx,.xls"
+        class="oculto"
+        onchange="procesarExcel(event)"
+    >
 
-<h3>🧾 Facturas</h3>
+    <div id="mensaje"></div>
 
-<p>
-Administración de facturas.
-</p>
+    <input
+        type="text"
+        id="buscarCliente"
+        class="buscar"
+        placeholder="Buscar por empresa, contacto, teléfono o correo..."
+        oninput="filtrarClientes()"
+    >
 
-</div>
+    <div class="tabla-contenedor">
+        <table>
+            <thead>
+                <tr>
+                    <th>Empresa</th>
+                    <th>Área</th>
+                    <th>Contacto</th>
+                    <th>Teléfono</th>
+                    <th>Correo electrónico</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
 
-<div class="modulo">
-
-<h3>💰 Ingresos</h3>
-
-<p>
-Control de ingresos.
-</p>
-
-</div>
-
-<div class="modulo">
-
-<h3>💸 Egresos</h3>
-
-<p>
-Control de egresos y salarios.
-</p>
-
-</div>
-
-<div class="modulo">
-
-<h3>🏦 Cheques</h3>
-
-<p>
-Control de cheques emitidos.
-</p>
-
-</div>
-
-<div class="modulo">
-
-<h3>📋 Procesos del día</h3>
-
-<p>
-Seguimiento de procesos.
-</p>
-
-</div>
-
-<div class="modulo">
-
-<h3>📁 Documentos</h3>
-
-<p>
-Documentos de la empresa.
-</p>
-
-</div>
-
-<div class="modulo">
-
-<h3>💵 Saldo en cuentas</h3>
-
-<p>
-Control financiero.
-</p>
-
-</div>
-
-<div class="modulo">
-
-<h3>⚙️ Configuración</h3>
-
-<p>
-Configuración del sistema.
-</p>
-
-</div>
+            <tbody id="listaClientes">
+                <tr>
+                    <td colspan="6">Conecta Supabase para consultar los clientes.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 </section>
 
-<section id="clientesModulo">
+<section id="conexionPanel" class="panel" style="margin-top:20px">
 
-<div class="panel">
+    <h2>Conexión con Supabase</h2>
 
-<div class="panel-header">
+    <p class="nota">
+        Introduce la clave publicable de tu proyecto y las credenciales
+        de un usuario autorizado. No utilices una clave secreta
+        ni una clave service_role.
+    </p>
 
-<h2>👥 Clientes</h2>
+    <label for="supabaseKey">Clave publicable de Supabase</label>
 
-<div>
+    <input
+        id="supabaseKey"
+        type="password"
+        autocomplete="off"
+        placeholder="sb_publishable_..."
+    >
 
-<button
-type="button"
-class="btn-excel"
-onclick="seleccionarExcel()">
+    <label for="loginEmail">Correo del usuario autorizado</label>
 
-📊 Cargar / actualizar Excel
+    <input
+        id="loginEmail"
+        type="email"
+        autocomplete="username"
+        placeholder="Correo de acceso"
+    >
 
-</button>
+    <label for="loginPassword">Contraseña</label>
 
-<button
-type="button"
-class="btn-secundario"
-onclick="cerrarClientes()">
+    <input
+        id="loginPassword"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Contraseña del usuario"
+    >
 
-Volver
+    <button
+        type="button"
+        id="btnConectar"
+        class="btn-principal"
+        onclick="conectarSupabase()"
+    >
+        Conectar e iniciar sesión
+    </button>
 
-</button>
-
-</div>
-
-</div>
-
-<input
-type="file"
-id="archivoExcel"
-accept=".xlsx,.xls"
-onchange="procesarExcel(event)"
->
-
-<div id="mensaje"></div>
-
-<input
-type="text"
-id="buscarCliente"
-class="buscar"
-placeholder="🔎 Buscar por empresa, contacto, teléfono o correo..."
-oninput="filtrarClientes()"
->
-
-<div class="tabla-contenedor">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Empresa</th>
-<th>Área</th>
-<th>Contacto</th>
-<th>Teléfono</th>
-<th>Correo</th>
-<th>Estado</th>
-
-</tr>
-
-</thead>
-
-<tbody id="listaClientes"></tbody>
-
-</table>
-
-</div>
-
-</div>
+    <button
+        type="button"
+        class="btn-secundario"
+        onclick="cerrarSesion()"
+    >
+        Cerrar sesión
+    </button>
 
 </section>
 
 <div id="estadoConexion">
+    Esperando conexión con Supabase.
+</div>
 
-🔄 Conectando con Supabase...
+<section id="seccion-facturas" class="panel seccion-modulo">
+    <h2>🧾 Facturas</h2>
+    <p class="nota">
+        Módulo preparado para integrar los registros de facturas desde Excel.
+    </p>
+    <div id="contenido-facturas">
+        Los datos de facturas todavía no están conectados a esta pantalla.
+    </div>
+    <br>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
 
+<section id="seccion-ingresos" class="panel seccion-modulo">
+    <h2>💰 Ingresos</h2>
+    <p class="nota">
+        Módulo preparado para consultar los ingresos empresariales.
+    </p>
+    <div id="contenido-ingresos">
+        Los datos de ingresos todavía no están conectados a esta pantalla.
+    </div>
+    <br>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
+
+<section id="seccion-egresos" class="panel seccion-modulo">
+    <h2>💸 Egresos</h2>
+    <p class="nota">
+        Módulo preparado para consultar los egresos, incluidos los salarios.
+    </p>
+    <div id="contenido-egresos">
+        Los datos de egresos todavía no están conectados a esta pantalla.
+    </div>
+    <br>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
+
+<section id="seccion-cheques" class="panel seccion-modulo">
+    <h2>🏦 Cheques</h2>
+    <p class="nota">
+        Módulo preparado para consultar los cheques emitidos.
+    </p>
+    <div id="contenido-cheques">
+        Los datos de cheques todavía no están conectados a esta pantalla.
+    </div>
+    <br>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
+
+<section id="seccion-procesos" class="panel seccion-modulo">
+    <h2>📋 Procesos del día</h2>
+    <p class="nota">
+        Módulo preparado para consultar los procesos empresariales.
+    </p>
+    <div id="contenido-procesos">
+        Los datos de procesos todavía no están conectados a esta pantalla.
+    </div>
+    <br>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
+
+<section id="seccion-documentos" class="panel seccion-modulo">
+    <h2>📁 Documentos</h2>
+    <p class="nota">
+        Espacio para integrar los documentos de la empresa.
+    </p>
+    <div id="contenido-documentos">
+        Los documentos todavía no están conectados a esta pantalla.
+    </div>
+    <br>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
+
+<section id="seccion-cuentas" class="panel seccion-modulo">
+    <h2>💵 Saldo en cuentas</h2>
+    <p class="nota">
+        Espacio para integrar el saldo actual y los movimientos financieros.
+    </p>
+    <div id="contenido-cuentas">
+        Los saldos todavía no están conectados a esta pantalla.
+    </div>
+    <br>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
+
+<section id="seccion-configuracion" class="panel seccion-modulo">
+    <h2>⚙️ Configuración</h2>
+    <p>Proyecto Supabase: SIPSA</p>
+    <p>Tabla de clientes: clientes</p>
+    <p class="nota">
+        La clave publicable puede utilizarse desde el navegador con
+        políticas RLS correctamente configuradas y autenticación.
+        Nunca publiques una clave secreta o service_role.
+    </p>
+    <br>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
+
+<div class="pie">
+    SIPSA · Sistema Empresarial
 </div>
 
 </main>
 
-<!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- Lector de Excel -->
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 
-<!-- Configuración de Supabase -->
-<script src="./supabase-config.js"></script>
-
 <script>
+"use strict";
 
-/* =========================================
-   VARIABLES
-========================================= */
+const URL_SUPABASE = "https://fyntemgivcsycuyhpsyz.supabase.co";
 
 let clienteSupabase = null;
-
 let clientes = [];
+let sistemaIniciado = false;
 
+function mostrarEstado(texto, tipo) {
+    const elemento = document.getElementById("estadoConexion");
 
-/* =========================================
-   INICIAR SISTEMA
-========================================= */
+    elemento.textContent = texto;
+    elemento.className = "";
 
-async function iniciarSistema(){
-
-const estado =
-document.getElementById("estadoConexion");
-
-try{
-
-/* Comprobar biblioteca Supabase */
-
-if(
-typeof window.supabase === "undefined"
-){
-
-estado.textContent =
-"🔴 No se pudo cargar la biblioteca de Supabase.";
-
-return;
-
+    if (tipo === "exito") {
+        elemento.style.background = "#dcfce7";
+        elemento.style.color = "#166534";
+    } else if (tipo === "error") {
+        elemento.style.background = "#fee2e2";
+        elemento.style.color = "#991b1b";
+    } else {
+        elemento.style.background = "#e0f2fe";
+        elemento.style.color = "#075985";
+    }
 }
 
+async function conectarSupabase() {
+    const clave = document.getElementById("supabaseKey").value.trim();
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    const boton = document.getElementById("btnConectar");
 
-/* Comprobar configuración */
+    if (!window.supabase ||
+        typeof window.supabase.createClient !== "function") {
+        mostrarEstado(
+            "No se pudo cargar la biblioteca de Supabase. " +
+            "Comprueba tu conexión a Internet y vuelve a intentarlo.",
+            "error"
+        );
+        return;
+    }
 
-if(
-typeof SUPABASE_URL === "undefined"
-){
+    if (!clave.startsWith("sb_publishable_")) {
+        mostrarEstado(
+            "La clave introducida no parece ser una clave publicable. " +
+            "Revisa las API Keys de tu proyecto Supabase.",
+            "error"
+        );
+        return;
+    }
 
-estado.textContent =
-"🔴 SUPABASE_URL no está disponible.";
+    if (!email || !password) {
+        mostrarEstado(
+            "Escribe el correo y la contraseña del usuario autorizado.",
+            "error"
+        );
+        return;
+    }
 
-return;
+    boton.disabled = true;
+    boton.textContent = "Conectando...";
 
+    try {
+        mostrarEstado("Conectando con Supabase e iniciando sesión...");
+
+        clienteSupabase = window.supabase.createClient(
+            URL_SUPABASE,
+            clave,
+            {
+                auth: {
+                    persistSession: true,
+                    autoRefreshToken: true,
+                    detectSessionInUrl: true
+                }
+            }
+        );
+
+        const acceso = await clienteSupabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if (acceso.error) {
+            throw acceso.error;
+        }
+
+        const prueba = await clienteSupabase
+            .from("clientes")
+            .select("id")
+            .limit(1);
+
+        if (prueba.error) {
+            sistemaIniciado = false;
+
+            mostrarEstado(
+                "El inicio de sesión funcionó, pero no se pudo consultar " +
+                "la tabla clientes. Revisa los permisos RLS y el nombre " +
+                "de la tabla. Detalle: " + prueba.error.message,
+                "error"
+            );
+
+            return;
+        }
+
+        sistemaIniciado = true;
+
+        document.getElementById("loginPassword").value = "";
+
+        mostrarEstado(
+            "Conexión correcta. Sesión iniciada y tabla clientes accesible.",
+            "exito"
+        );
+
+        if (document.getElementById("clientesModulo").style.display === "block") {
+            await cargarClientes();
+        }
+
+    } catch (error) {
+        sistemaIniciado = false;
+
+        console.error("Error de conexión:", error);
+
+        mostrarEstado(
+            "No se pudo conectar o iniciar sesión: " +
+            (error.message || String(error)),
+            "error"
+        );
+
+    } finally {
+        boton.disabled = false;
+        boton.textContent = "Conectar e iniciar sesión";
+    }
 }
 
+async function cerrarSesion() {
+    try {
+        if (clienteSupabase) {
+            const resultado = await clienteSupabase.auth.signOut();
 
-if(
-typeof SUPABASE_KEY === "undefined"
-){
+            if (resultado.error) {
+                throw resultado.error;
+            }
+        }
 
-estado.textContent =
-"🔴 SUPABASE_KEY no está disponible.";
+        sistemaIniciado = false;
+        clientes = [];
 
-return;
+        document.getElementById("listaClientes").innerHTML =
+            "<tr><td colspan='6'>Inicia sesión para consultar los clientes.</td></tr>";
 
+        mostrarEstado(
+            "Sesión cerrada. Inicia sesión nuevamente para consultar los datos."
+        );
+
+    } catch (error) {
+        mostrarEstado(
+            "No se pudo cerrar la sesión: " +
+            (error.message || String(error)),
+            "error"
+        );
+    }
 }
 
+function ocultarSecciones() {
+    document.getElementById("clientesModulo").style.display = "none";
 
-/* Crear cliente */
+    document.querySelectorAll(".seccion-modulo").forEach(function(seccion) {
+        seccion.style.display = "none";
+    });
 
-clienteSupabase =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
-
-
-/* Probar conexión */
-
-const resultado =
-await clienteSupabase
-.from("clientes")
-.select("id")
-.limit(1);
-
-
-if(resultado.error){
-
-estado.textContent =
-"🔴 Error de Supabase: " +
-resultado.error.message;
-
-return;
-
+    document.querySelector(".bienvenida").style.display = "block";
+    document.getElementById("menuModulos").style.display = "grid";
 }
 
+function abrirClientes() {
+    document.querySelector(".bienvenida").style.display = "none";
+    document.getElementById("menuModulos").style.display = "none";
 
-/* Conexión correcta */
+    document.querySelectorAll(".seccion-modulo").forEach(function(seccion) {
+        seccion.style.display = "none";
+    });
 
-estado.textContent =
-"🟢 Supabase conectado correctamente";
+    document.getElementById("clientesModulo").style.display = "block";
 
-}catch(error){
-
-console.error(error);
-
-estado.textContent =
-"🔴 Error de conexión: " +
-error.message;
-
+    cargarClientes();
 }
 
+function volverInicio() {
+    ocultarSecciones();
 }
 
+function mostrarModulo(nombre) {
+    document.querySelector(".bienvenida").style.display = "none";
+    document.getElementById("menuModulos").style.display = "none";
+    document.getElementById("clientesModulo").style.display = "none";
 
-/* =========================================
-   CLIENTES
-========================================= */
+    document.querySelectorAll(".seccion-modulo").forEach(function(seccion) {
+        seccion.style.display = "none";
+    });
 
-function abrirClientes(){
+    const seccion = document.getElementById("seccion-" + nombre);
 
-document
-.querySelector(".bienvenida")
-.style.display="none";
-
-document
-.querySelector(".modulos")
-.style.display="none";
-
-document
-.getElementById("clientesModulo")
-.style.display="block";
-
-cargarClientes();
-
+    if (seccion) {
+        seccion.style.display = "block";
+    }
 }
 
+async function cargarClientes() {
+    if (!clienteSupabase || !sistemaIniciado) {
+        mostrarMensaje(
+            "Primero conecta Supabase e inicia sesión.",
+            false
+        );
+        return;
+    }
 
-function cerrarClientes(){
+    const lista = document.getElementById("listaClientes");
 
-document
-.getElementById("clientesModulo")
-.style.display="none";
+    lista.innerHTML =
+        "<tr><td colspan='6'>Cargando clientes...</td></tr>";
 
-document
-.querySelector(".bienvenida")
-.style.display="block";
+    try {
+        const resultado = await clienteSupabase
+            .from("clientes")
+            .select("*")
+            .order("empresa", { ascending: true });
 
-document
-.querySelector(".modulos")
-.style.display="grid";
+        if (resultado.error) {
+            mostrarMensaje(
+                "Error al cargar clientes: " + resultado.error.message,
+                false
+            );
 
+            lista.innerHTML = "";
+            return;
+        }
+
+        clientes = resultado.data || [];
+
+        mostrarClientes(clientes);
+
+    } catch (error) {
+        mostrarMensaje(
+            "Error al cargar clientes: " + error.message,
+            false
+        );
+
+        lista.innerHTML = "";
+    }
 }
 
+function mostrarClientes(datos) {
+    const lista = document.getElementById("listaClientes");
 
-/* =========================================
-   CARGAR CLIENTES
-========================================= */
+    if (!datos || datos.length === 0) {
+        lista.innerHTML =
+            "<tr><td colspan='6'>No hay clientes registrados.</td></tr>";
+        return;
+    }
 
-async function cargarClientes(){
+    lista.innerHTML = "";
 
-if(!clienteSupabase){
+    datos.forEach(function(cliente) {
+        const fila = document.createElement("tr");
 
-mostrarMensaje(
-"Supabase todavía no está conectado.",
-false
-);
+        fila.innerHTML = `
+            <td>${escapar(cliente.empresa)}</td>
+            <td>${escapar(cliente.area)}</td>
+            <td>${escapar(cliente.nombre_contacto)}</td>
+            <td>${escapar(cliente.telefono)}</td>
+            <td>${escapar(cliente.correo_electronico)}</td>
+            <td>${escapar(cliente.estado || "")}</td>
+        `;
 
-return;
-
+        lista.appendChild(fila);
+    });
 }
 
-const lista =
-document.getElementById("listaClientes");
+function filtrarClientes() {
+    const texto = document
+        .getElementById("buscarCliente")
+        .value
+        .toLowerCase()
+        .trim();
 
-lista.innerHTML =
-"<tr><td colspan='6'>Cargando clientes...</td></tr>";
+    const filtrados = clientes.filter(function(cliente) {
+        return (
+            String(cliente.empresa || "").toLowerCase().includes(texto) ||
+            String(cliente.area || "").toLowerCase().includes(texto) ||
+            String(cliente.nombre_contacto || "").toLowerCase().includes(texto) ||
+            String(cliente.telefono || "").toLowerCase().includes(texto) ||
+            String(cliente.correo_electronico || "").toLowerCase().includes(texto)
+        );
+    });
 
-const resultado =
-await clienteSupabase
-.from("clientes")
-.select("*")
-.order(
-"empresa",
-{
-ascending:true
-}
-);
-
-if(resultado.error){
-
-mostrarMensaje(
-"Error al cargar clientes: " +
-resultado.error.message,
-false
-);
-
-lista.innerHTML="";
-
-return;
-
+    mostrarClientes(filtrados);
 }
 
-clientes =
-resultado.data || [];
+function seleccionarExcel() {
+    if (!clienteSupabase || !sistemaIniciado) {
+        mostrarMensaje(
+            "Primero conecta Supabase e inicia sesión.",
+            false
+        );
+        return;
+    }
 
-mostrarClientes(clientes);
-
+    const archivo = document.getElementById("archivoExcel");
+    archivo.value = "";
+    archivo.click();
 }
 
+async function procesarExcel(evento) {
+    const archivo = evento.target.files[0];
 
-/* =========================================
-   MOSTRAR CLIENTES
-========================================= */
+    if (!archivo) {
+        return;
+    }
 
-function mostrarClientes(datos){
+    if (!clienteSupabase || !sistemaIniciado) {
+        mostrarMensaje(
+            "Primero conecta Supabase e inicia sesión.",
+            false
+        );
+        return;
+    }
 
-const lista =
-document.getElementById("listaClientes");
+    if (typeof XLSX === "undefined") {
+        mostrarMensaje(
+            "No se pudo cargar la biblioteca de Excel. " +
+            "Comprueba tu conexión a Internet.",
+            false
+        );
+        return;
+    }
 
-if(datos.length===0){
+    try {
+        mostrarMensaje("Leyendo archivo Excel...", "info");
 
-lista.innerHTML =
-"<tr><td colspan='6'>No hay clientes registrados.</td></tr>";
+        const contenido = await archivo.arrayBuffer();
 
-return;
+        const libro = XLSX.read(contenido, {
+            type: "array"
+        });
 
+        if (!libro.SheetNames.includes("EMPRESAS")) {
+            mostrarMensaje(
+                "El archivo no contiene la hoja EMPRESAS.",
+                false
+            );
+            return;
+        }
+
+        const hoja = libro.Sheets["EMPRESAS"];
+
+        const filas = XLSX.utils.sheet_to_json(hoja, {
+            header: 1,
+            defval: ""
+        });
+
+        if (filas.length < 2) {
+            mostrarMensaje(
+                "La hoja EMPRESAS no contiene registros para importar.",
+                false
+            );
+            return;
+        }
+
+        const encabezados = filas[0].map(normalizarTexto);
+
+        const indiceEmpresa = buscarColumna(
+            encabezados,
+            ["empresa"]
+        );
+
+        const indiceArea = buscarColumna(
+            encabezados,
+            ["area"]
+        );
+
+        const indiceContacto = buscarColumna(
+            encabezados,
+            [
+                "nombre del colaborador",
+                "nombre colaborador",
+                "nombre contacto"
+            ]
+        );
+
+        const indiceTelefono = buscarColumna(
+            encabezados,
+            ["telefono"]
+        );
+
+        const indiceCorreo = buscarColumna(
+            encabezados,
+            [
+                "correo electronico",
+                "correo"
+            ]
+        );
+
+        if (indiceEmpresa === -1 ||
+            indiceArea === -1 ||
+            indiceContacto === -1 ||
+            indiceTelefono === -1 ||
+            indiceCorreo === -1) {
+
+            mostrarMensaje(
+                "No se encontraron todos los encabezados necesarios. " +
+                "La hoja debe contener Empresa, área, nombre del colaborador, " +
+                "teléfono y correo electrónico.",
+                false
+            );
+
+            return;
+        }
+
+        const registros = [];
+
+        for (let i = 1; i < filas.length; i++) {
+            const fila = filas[i];
+
+            const empresa = String(fila[indiceEmpresa] || "").trim();
+            const area = String(fila[indiceArea] || "").trim();
+            const contacto = String(fila[indiceContacto] || "").trim();
+            const telefono = String(fila[indiceTelefono] || "").trim();
+            const correo = String(fila[indiceCorreo] || "").trim();
+
+            if (!empresa && !area && !contacto && !telefono && !correo) {
+                continue;
+            }
+
+            registros.push({
+                excel_row_key: "EMPRESAS-" + (i + 1),
+                empresa: empresa,
+                area: area,
+                nombre_contacto: contacto,
+                telefono: telefono,
+                correo_electronico: correo,
+                estado: "activo"
+            });
+        }
+
+        if (registros.length === 0) {
+            mostrarMensaje(
+                "No se encontraron clientes con información para importar.",
+                false
+            );
+            return;
+        }
+
+        mostrarMensaje(
+            "Actualizando " + registros.length + " registros...",
+            "info"
+        );
+
+        const existentesResultado = await clienteSupabase
+            .from("clientes")
+            .select("id,excel_row_key");
+
+        if (existentesResultado.error) {
+            mostrarMensaje(
+                "No se pudieron consultar los clientes existentes: " +
+                existentesResultado.error.message,
+                false
+            );
+            return;
+        }
+
+        const mapaExistentes = new Map();
+
+        (existentesResultado.data || []).forEach(function(cliente) {
+            if (cliente.excel_row_key) {
+                mapaExistentes.set(
+                    String(cliente.excel_row_key),
+                    cliente.id
+                );
+            }
+        });
+
+        let nuevos = 0;
+        let actualizados = 0;
+        let errores = 0;
+
+        for (const registro of registros) {
+            try {
+                const idExistente = mapaExistentes.get(
+                    registro.excel_row_key
+                );
+
+                if (idExistente) {
+                    const actualizacion = await clienteSupabase
+                        .from("clientes")
+                        .update({
+                            empresa: registro.empresa,
+                            area: registro.area,
+                            nombre_contacto: registro.nombre_contacto,
+                            telefono: registro.telefono,
+                            correo_electronico: registro.correo_electronico,
+                            estado: registro.estado,
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq("id", idExistente);
+
+                    if (actualizacion.error) {
+                        throw actualizacion.error;
+                    }
+
+                    actualizados++;
+
+                } else {
+                    const insercion = await clienteSupabase
+                        .from("clientes")
+                        .insert({
+                            excel_row_key: registro.excel_row_key,
+                            empresa: registro.empresa,
+                            area: registro.area,
+                            nombre_contacto: registro.nombre_contacto,
+                            telefono: registro.telefono,
+                            correo_electronico: registro.correo_electronico,
+                            estado: registro.estado
+                        });
+
+                    if (insercion.error) {
+                        throw insercion.error;
+                    }
+
+                    nuevos++;
+                }
+
+            } catch (error) {
+                console.error(
+                    "Error al guardar un registro:",
+                    error
+                );
+
+                errores++;
+            }
+        }
+
+        if (errores > 0) {
+            mostrarMensaje(
+                "Importación terminada con errores. " +
+                "Nuevos: " + nuevos +
+                " | Actualizados: " + actualizados +
+                " | Errores: " + errores +
+                ". Revisa los permisos y los nombres de las columnas.",
+                false
+            );
+        } else {
+            mostrarMensaje(
+                "Excel actualizado correctamente. " +
+                "Nuevos: " + nuevos +
+                " | Actualizados: " + actualizados,
+                true
+            );
+        }
+
+        await cargarClientes();
+
+    } catch (error) {
+        console.error("Error procesando Excel:", error);
+
+        mostrarMensaje(
+            "Error al procesar el archivo: " +
+            (error.message || String(error)),
+            false
+        );
+
+    } finally {
+        evento.target.value = "";
+    }
 }
 
-lista.innerHTML="";
+function normalizarTexto(texto) {
+    return String(texto || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+}
 
-datos.forEach(cliente=>{
+function buscarColumna(encabezados, nombres) {
+    for (let i = 0; i < encabezados.length; i++) {
+        if (nombres.includes(encabezados[i])) {
+            return i;
+        }
+    }
 
-const fila =
-document.createElement("tr");
+    return -1;
+}
 
-fila.innerHTML = `
+function mostrarMensaje(texto, tipo) {
+    const mensaje = document.getElementById("mensaje");
 
-<td>${escapar(cliente.empresa)}</td>
+    mensaje.textContent = texto;
 
-<td>${escapar(cliente.area)}</td>
+    mensaje.className = "";
 
-<td>${escapar(cliente.nombre_contacto)}</td>
+    if (tipo === "info") {
+        mensaje.classList.add("mensaje-info");
+    } else if (tipo === true) {
+        mensaje.classList.add("mensaje-exito");
+    } else {
+        mensaje.classList.add("mensaje-error");
+    }
 
-<td>${escapar(cliente.telefono)}</td>
+    mensaje.style.display = "block";
+}
 
-<td>${escapar(cliente.correo_electronico)}</td>
+function escapar(valor) {
+    if (valor === null || valor === undefined) {
+        return "";
+    }
 
-<td>${escapar(cliente.estado || "")}</td>
+    return String(valor)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
-`;
-
-lista.appendChild(fila);
-
+window.addEventListener("error", function(evento) {
+    console.error(
+        "Error de JavaScript:",
+        evento.error || evento.message
+    );
 });
 
-}
-
-
-/* =========================================
-   BUSCAR CLIENTES
-========================================= */
-
-function filtrarClientes(){
-
-const texto =
-document
-.getElementById("buscarCliente")
-.value
-.toLowerCase();
-
-const filtrados =
-clientes.filter(cliente=>{
-
-return (
-
-String(cliente.empresa || "")
-.toLowerCase()
-.includes(texto)
-
-||
-
-String(cliente.area || "")
-.toLowerCase()
-.includes(texto)
-
-||
-
-String(cliente.nombre_contacto || "")
-.toLowerCase()
-.includes(texto)
-
-||
-
-String(cliente.telefono || "")
-.toLowerCase()
-.includes(texto)
-
-||
-
-String(cliente.correo_electronico || "")
-.toLowerCase()
-.includes(texto)
-
-);
-
+window.addEventListener("unhandledrejection", function(evento) {
+    console.error(
+        "Error asíncrono:",
+        evento.reason
+    );
 });
 
-mostrarClientes(filtrados);
-
-}
-
-
-/* =========================================
-   SELECCIONAR EXCEL
-========================================= */
-
-function seleccionarExcel(){
-
-const archivo =
-document.getElementById("archivoExcel");
-
-archivo.value="";
-
-archivo.click();
-
-}
-
-
-/* =========================================
-   PROCESAR EXCEL
-========================================= */
-
-async function procesarExcel(event){
-
-const archivo =
-event.target.files[0];
-
-if(!archivo){
-
-return;
-
-}
-
-if(!clienteSupabase){
-
-mostrarMensaje(
-"Supabase todavía no está conectado.",
-false
-);
-
-return;
-
-}
-
-try{
-
-mostrarMensaje(
-"⏳ Leyendo archivo Excel...",
-"info"
-);
-
-const datos =
-await archivo.arrayBuffer();
-
-const libro =
-XLSX.read(
-datos,
-{
-type:"array"
-}
-);
-
-
-/* Buscar hoja EMPRESAS */
-
-if(
-!libro.SheetNames.includes("EMPRESAS")
-){
-
-mostrarMensaje(
-"❌ El archivo no contiene la hoja EMPRESAS.",
-false
-);
-
-return;
-
-}
-
-const hoja =
-libro.Sheets["EMPRESAS"];
-
-const filas =
-XLSX.utils.sheet_to_json(
-hoja,
-{
-header:1,
-defval:""
-}
-);
-
-if(filas.length < 2){
-
-mostrarMensaje(
-"❌ La hoja EMPRESAS no contiene datos.",
-false
-);
-
-return;
-
-}
-
-
-/* Encabezados */
-
-const encabezados =
-filas[0].map(
-encabezado =>
-normalizarTexto(encabezado)
-);
-
-
-/* Buscar columnas */
-
-const indiceEmpresa =
-buscarColumna(
-encabezados,
-["empresa"]
-);
-
-const indiceArea =
-buscarColumna(
-encabezados,
-["area"]
-);
-
-const indiceContacto =
-buscarColumna(
-encabezados,
-[
-"nombre del colaborador",
-"nombre colaborador",
-"nombre contacto"
-]
-);
-
-const indiceTelefono =
-buscarColumna(
-encabezados,
-["telefono"]
-);
-
-const indiceCorreo =
-buscarColumna(
-encabezados,
-[
-"correo electronico",
-"correo"
-]
-);
-
-
-/* Validaciones */
-
-if(indiceEmpresa === -1){
-
-mostrarMensaje(
-"❌ No se encontró la columna Empresa.",
-false
-);
-
-return;
-
-}
-
-if(indiceArea === -1){
-
-mostrarMensaje(
-"❌ No se encontró la columna area.",
-false
-);
-
-return;
-
-}
-
-if(indiceContacto === -1){
-
-mostrarMensaje(
-"❌ No se encontró la columna nombre del colaborador.",
-false
-);
-
-return;
-
-}
-
-if(indiceTelefono === -1){
-
-mostrarMensaje(
-"❌ No se encontró la columna telefono.",
-false
-);
-
-return;
-
-}
-
-if(indiceCorreo === -1){
-
-mostrarMensaje(
-"❌ No se encontró la columna correo electronico.",
-false
-);
-
-return;
-
-}
-
-
-/* Crear registros */
-
-const registros=[];
-
-for(
-let i=1;
-i<filas.length;
-i++
-){
-
-const fila =
-filas[i];
-
-const empresa =
-String(
-fila[indiceEmpresa] || ""
-).trim();
-
-const area =
-String(
-fila[indiceArea] || ""
-).trim();
-
-const contacto =
-String(
-fila[indiceContacto] || ""
-).trim();
-
-const telefono =
-String(
-fila[indiceTelefono] || ""
-).trim();
-
-const correo =
-String(
-fila[indiceCorreo] || ""
-).trim();
-
-
-if(
-!empresa &&
-!area &&
-!contacto &&
-!telefono &&
-!correo
-){
-
-continue;
-
-}
-
-
-/*
-   La fila de Excel se utiliza
-   como identificador de sincronización.
-*/
-
-const excelRowKey =
-"EMPRESAS-" +
-(i + 1);
-
-
-registros.push({
-
-excel_row_key:
-excelRowKey,
-
-empresa:
-empresa,
-
-area:
-area,
-
-nombre_contacto:
-contacto,
-
-telefono:
-telefono,
-
-correo_electronico:
-correo,
-
-estado:
-"activo"
-
+window.addEventListener("load", function() {
+    mostrarEstado(
+        "Listo. Introduce tu clave publicable y las credenciales autorizadas."
+    );
 });
-
-}
-
-
-if(registros.length === 0){
-
-mostrarMensaje(
-"❌ No se encontraron clientes.",
-false
-);
-
-return;
-
-}
-
-mostrarMensaje(
-"⏳ Actualizando " +
-registros.length +
-" clientes...",
-"info"
-);
-
-
-/* Obtener existentes */
-
-const existentesResultado =
-await clienteSupabase
-.from("clientes")
-.select(
-"id,excel_row_key"
-);
-
-if(existentesResultado.error){
-
-mostrarMensaje(
-"❌ Error consultando clientes: " +
-existentesResultado.error.message,
-false
-);
-
-return;
-
-}
-
-const existentes =
-existentesResultado.data || [];
-
-const mapaExistentes =
-new Map();
-
-existentes.forEach(cliente=>{
-
-if(cliente.excel_row_key){
-
-mapaExistentes.set(
-String(cliente.excel_row_key),
-cliente.id
-);
-
-}
-
-});
-
-
-let nuevos=0;
-let actualizados=0;
-let errores=0;
-
-
-/* Actualizar / insertar */
-
-for(
-const registro of registros
-){
-
-try{
-
-const idExistente =
-mapaExistentes.get(
-registro.excel_row_key
-);
-
-
-if(idExistente){
-
-const resultado =
-await clienteSupabase
-.from("clientes")
-.update({
-
-empresa:
-registro.empresa,
-
-area:
-registro.area,
-
-nombre_contacto:
-registro.nombre_contacto,
-
-telefono:
-registro.telefono,
-
-correo_electronico:
-registro.correo_electronico,
-
-estado:
-registro.estado,
-
-updated_at:
-new Date().toISOString()
-
-})
-.eq(
-"id",
-idExistente
-);
-
-
-if(resultado.error){
-
-throw resultado.error;
-
-}
-
-actualizados++;
-
-}else{
-
-const resultado =
-await clienteSupabase
-.from("clientes")
-.insert({
-
-id:
-generarId(),
-
-excel_row_key:
-registro.excel_row_key,
-
-empresa:
-registro.empresa,
-
-area:
-registro.area,
-
-nombre_contacto:
-registro.nombre_contacto,
-
-telefono:
-registro.telefono,
-
-correo_electronico:
-registro.correo_electronico,
-
-estado:
-registro.estado
-
-});
-
-
-if(resultado.error){
-
-throw resultado.error;
-
-}
-
-nuevos++;
-
-}
-
-}catch(error){
-
-console.error(
-"Error procesando cliente:",
-error
-);
-
-errores++;
-
-}
-
-}
-
-
-/* Resultado */
-
-if(errores > 0){
-
-mostrarMensaje(
-"⚠️ Actualización terminada. " +
-"Nuevos: " +
-nuevos +
-" | Actualizados: " +
-actualizados +
-" | Errores: " +
-errores,
-false
-);
-
-}else{
-
-mostrarMensaje(
-"✅ Excel actualizado correctamente. " +
-"Nuevos: " +
-nuevos +
-" | Actualizados: " +
-actualizados,
-true
-);
-
-}
-
-await cargarClientes();
-
-}
-
-
-/* =========================================
-   NORMALIZAR TEXTO
-========================================= */
-
-function normalizarTexto(texto){
-
-return String(
-texto || ""
-)
-.toLowerCase()
-.normalize("NFD")
-.replace(
-/[\u0300-\u036f]/g,
-""
-)
-.trim();
-
-}
-
-
-/* =========================================
-   BUSCAR COLUMNA
-========================================= */
-
-function buscarColumna(
-encabezados,
-nombres
-){
-
-for(
-let i=0;
-i<encabezados.length;
-i++
-){
-
-if(
-nombres.includes(
-encabezados[i]
-)
-){
-
-return i;
-
-}
-
-}
-
-return -1;
-
-}
-
-
-/* =========================================
-   GENERAR ID
-========================================= */
-
-function generarId(){
-
-return (
-"CLI-" +
-Date.now().toString(36) +
-"-" +
-Math.random()
-.toString(36)
-.substring(2,10)
-).toUpperCase();
-
-}
-
-
-/* =========================================
-   MENSAJES
-========================================= */
-
-function mostrarMensaje(
-texto,
-tipo
-){
-
-const mensaje =
-document.getElementById("mensaje");
-
-mensaje.textContent =
-texto;
-
-if(tipo === "info"){
-
-mensaje.className =
-"mensaje-info";
-
-}else{
-
-mensaje.className =
-tipo
-?
-"mensaje-exito"
-:
-"mensaje-error";
-
-}
-
-mensaje.style.display =
-"block";
-
-if(tipo !== "info"){
-
-setTimeout(()=>{
-
-mensaje.style.display =
-"none";
-
-},7000);
-
-}
-
-}
-
-
-/* =========================================
-   ESCAPAR HTML
-========================================= */
-
-function escapar(valor){
-
-if(
-valor === null ||
-valor === undefined
-){
-
-return "";
-
-}
-
-return String(valor)
-
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================================
-   INICIAR
-========================================= */
-
-iniciarSistema();
-
 </script>
 
 </body>
