@@ -12,7 +12,10 @@ body{font-family:Arial,sans-serif;background:#f1f5f9;color:#0f172a}
 header{background:#0f172a;color:white;padding:18px 20px}
 header h1{font-size:23px}
 main{max-width:1200px;margin:auto;padding:20px}
-.bienvenida,.panel,.modulo,#conexionPanel,#estadoConexion{background:white;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.bienvenida,.panel,.modulo,#conexionPanel,#estadoConexion{
+    background:white;border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08)
+}
 .bienvenida{padding:22px;margin-bottom:20px}
 .bienvenida h2{margin-bottom:8px}
 .modulos{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
@@ -36,7 +39,10 @@ label{display:block;font-weight:bold;margin:10px 0 7px}
 table{width:100%;border-collapse:collapse;min-width:750px;background:white}
 th,td{padding:12px;border-bottom:1px solid #e2e8f0;text-align:left;font-size:14px}
 th{background:#f8fafc}
-#mensaje,#mensajeAcceso{display:none;margin:12px 0;padding:12px;border-radius:8px;overflow-wrap:anywhere;line-height:1.5}
+#mensaje,#mensajeAcceso,#mensajeRecuperacion{
+    display:none;margin:12px 0;padding:12px;border-radius:8px;
+    overflow-wrap:anywhere;line-height:1.5
+}
 .mensaje-exito{background:#dcfce7;color:#166534}
 .mensaje-error{background:#fee2e2;color:#991b1b}
 .mensaje-info{background:#e0f2fe;color:#075985}
@@ -50,12 +56,12 @@ th{background:#f8fafc}
 #recuperacionPanel{display:none;margin:20px 0}
 #loginPanel{display:block}
 @media(max-width:650px){
- main{padding:12px}
- .panel{padding:14px}
- .modulos{grid-template-columns:1fr 1fr;gap:10px}
- .modulo{padding:14px}
- .panel-header>div{width:100%}
- .panel-header button{width:100%}
+    main{padding:12px}
+    .panel{padding:14px}
+    .modulos{grid-template-columns:1fr 1fr;gap:10px}
+    .modulo{padding:14px}
+    .panel-header>div{width:100%}
+    .panel-header button{width:100%}
 }
 </style>
 </head>
@@ -72,13 +78,10 @@ th{background:#f8fafc}
     <p>Bienvenido al sistema empresarial de SIPSA.</p>
 </section>
 
+<!-- INICIO DE SESIÓN -->
 <section id="loginPanel" class="panel">
     <h2>Acceso al sistema</h2>
     <p class="nota">Ingresa con tu usuario autorizado de SIPSA.</p>
-
-    <label for="supabaseKey">Clave publicable de Supabase</label>
-    <input id="supabaseKey" type="password" autocomplete="off"
-           placeholder="sb_publishable_...">
 
     <label for="loginEmail">Correo electrónico</label>
     <input id="loginEmail" type="email" autocomplete="username"
@@ -92,15 +95,18 @@ th{background:#f8fafc}
             onclick="conectarSupabase()">Iniciar sesión</button>
 
     <br>
+
     <button type="button" class="enlace" onclick="mostrarRecuperacion()">
         ¿Olvidaste tu contraseña?
     </button>
 
-    <div id="mensajeAcceso"></div>
+    <div id="mensajeAcceso" role="status"></div>
 </section>
 
+<!-- RECUPERACIÓN DE CONTRASEÑA -->
 <section id="recuperacionPanel" class="panel">
     <h2 id="tituloRecuperacion">Recuperar contraseña</h2>
+
     <p id="instruccionRecuperacion" class="nota">
         Escribe el correo de tu usuario SIPSA para recibir un enlace de recuperación.
     </p>
@@ -111,7 +117,9 @@ th{background:#f8fafc}
                autocomplete="email" placeholder="Correo de tu usuario SIPSA">
 
         <button id="btnSolicitar" class="btn-principal" type="button"
-                onclick="solicitarRecuperacion()">Enviar enlace de recuperación</button>
+                onclick="solicitarRecuperacion()">
+            Enviar enlace de recuperación
+        </button>
     </div>
 
     <div id="formularioNuevaClave" class="oculto">
@@ -124,70 +132,110 @@ th{background:#f8fafc}
                placeholder="Repite la contraseña nueva">
 
         <button id="btnGuardarClave" class="btn-principal" type="button"
-                onclick="guardarNuevaClave()">Guardar nueva contraseña</button>
+                onclick="guardarNuevaClave()">
+            Guardar nueva contraseña
+        </button>
     </div>
 
-    <div id="mensajeRecuperacion" class="nota" role="status"></div>
+    <div id="mensajeRecuperacion" role="status"></div>
 
+    <br>
     <button type="button" class="btn-secundario"
-            onclick="volverAlAcceso()">Volver al inicio de sesión</button>
+            onclick="volverAlAcceso()">
+        Volver al inicio de sesión
+    </button>
 </section>
 
+<!-- MENÚ PRINCIPAL -->
 <section class="modulos" id="menuModulos" style="display:none">
+
     <div class="modulo" onclick="abrirClientes()">
-        <h3>👥 Clientes</h3><p>Consulta y actualización desde Excel.</p>
+        <h3>👥 Clientes</h3>
+        <p>Consulta y actualización desde Excel.</p>
     </div>
+
     <div class="modulo" onclick="mostrarModulo('facturas')">
-        <h3>🧾 Facturas</h3><p>Administración de facturas.</p>
+        <h3>🧾 Facturas</h3>
+        <p>Administración de facturas.</p>
     </div>
+
     <div class="modulo" onclick="mostrarModulo('ingresos')">
-        <h3>💰 Ingresos</h3><p>Control de ingresos y pagos.</p>
+        <h3>💰 Ingresos</h3>
+        <p>Control de ingresos y pagos.</p>
     </div>
+
     <div class="modulo" onclick="mostrarModulo('egresos')">
-        <h3>💸 Egresos</h3><p>Control de gastos y salarios.</p>
+        <h3>💸 Egresos</h3>
+        <p>Control de gastos y salarios.</p>
     </div>
+
     <div class="modulo" onclick="mostrarModulo('cheques')">
-        <h3>🏦 Cheques</h3><p>Control de cheques emitidos.</p>
+        <h3>🏦 Cheques</h3>
+        <p>Control de cheques emitidos.</p>
     </div>
+
     <div class="modulo" onclick="mostrarModulo('procesos')">
-        <h3>📋 Procesos del día</h3><p>Seguimiento de procesos empresariales.</p>
+        <h3>📋 Procesos del día</h3>
+        <p>Seguimiento de procesos empresariales.</p>
     </div>
+
     <div class="modulo" onclick="mostrarModulo('documentos')">
-        <h3>📁 Documentos</h3><p>Documentos importantes de la empresa.</p>
+        <h3>📁 Documentos</h3>
+        <p>Documentos importantes de la empresa.</p>
     </div>
+
     <div class="modulo" onclick="mostrarModulo('cuentas')">
-        <h3>💵 Saldo en cuentas</h3><p>Consulta de saldos financieros.</p>
+        <h3>💵 Saldo en cuentas</h3>
+        <p>Consulta de saldos financieros.</p>
     </div>
+
     <div class="modulo" onclick="mostrarModulo('configuracion')">
-        <h3>⚙️ Configuración</h3><p>Configuración del sistema.</p>
+        <h3>⚙️ Configuración</h3>
+        <p>Configuración del sistema.</p>
     </div>
+
 </section>
 
+<!-- CLIENTES -->
 <section id="clientesModulo" class="panel seccion-modulo">
+
     <div class="panel-header">
         <h2>👥 Clientes</h2>
         <div>
-            <button type="button" class="btn-excel" onclick="seleccionarExcel()">Cargar / actualizar Excel</button>
-            <button type="button" class="btn-secundario" onclick="volverInicio()">Volver</button>
+            <button type="button" class="btn-excel" onclick="seleccionarExcel()">
+                Cargar / actualizar Excel
+            </button>
+            <button type="button" class="btn-secundario" onclick="volverInicio()">
+                Volver
+            </button>
         </div>
     </div>
 
-    <p class="nota">Selecciona CONTROL SIPSA 2025 - 2026.xlsx. Se leerá la hoja EMPRESAS.</p>
+    <p class="nota">
+        Selecciona CONTROL SIPSA 2025 - 2026.xlsx. Se leerá la hoja EMPRESAS.
+    </p>
 
     <input type="file" id="archivoExcel" accept=".xlsx,.xls"
            class="oculto" onchange="procesarExcel(event)">
 
     <div id="mensaje"></div>
+
     <input type="text" id="buscarCliente" class="buscar"
            placeholder="Buscar empresa, contacto, teléfono o correo..."
            oninput="filtrarClientes()">
 
     <div class="tabla-contenedor">
         <table>
-            <thead><tr>
-                <th>Empresa</th><th>Área</th><th>Contacto</th>
-                <th>Teléfono</th><th>Correo electrónico</th><th>Estado</th>
-            </tr></thead>
+            <thead>
+                <tr>
+                    <th>Empresa</th>
+                    <th>Área</th>
+                    <th>Contacto</th>
+                    <th>Teléfono</th>
+                    <th>Correo electrónico</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
             <tbody id="listaClientes">
                 <tr><td colspan="6">Inicia sesión para consultar los clientes.</td></tr>
             </tbody>
@@ -195,48 +243,72 @@ th{background:#f8fafc}
     </div>
 </section>
 
+<!-- OTROS MÓDULOS -->
 <section id="seccion-facturas" class="panel seccion-modulo">
-    <h2>🧾 Facturas</h2><p class="nota">Módulo pendiente de integrar con los datos de Excel.</p>
-    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
-</section>
-<section id="seccion-ingresos" class="panel seccion-modulo">
-    <h2>💰 Ingresos</h2><p class="nota">Módulo pendiente de integrar con los datos de Excel.</p>
-    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
-</section>
-<section id="seccion-egresos" class="panel seccion-modulo">
-    <h2>💸 Egresos</h2><p class="nota">Módulo pendiente de integrar con los datos de Excel.</p>
-    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
-</section>
-<section id="seccion-cheques" class="panel seccion-modulo">
-    <h2>🏦 Cheques</h2><p class="nota">Módulo pendiente de integrar con los datos de Excel.</p>
-    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
-</section>
-<section id="seccion-procesos" class="panel seccion-modulo">
-    <h2>📋 Procesos del día</h2><p class="nota">Módulo pendiente de integrar con los datos de Excel.</p>
-    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
-</section>
-<section id="seccion-documentos" class="panel seccion-modulo">
-    <h2>📁 Documentos</h2><p class="nota">Módulo pendiente de integrar con los datos de Excel.</p>
-    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
-</section>
-<section id="seccion-cuentas" class="panel seccion-modulo">
-    <h2>💵 Saldo en cuentas</h2><p class="nota">Módulo pendiente de integrar con los datos financieros.</p>
-    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
-</section>
-<section id="seccion-configuracion" class="panel seccion-modulo">
-    <h2>⚙️ Configuración</h2>
-    <p>Proyecto Supabase: SIPSA</p><p>Tabla de clientes: clientes</p>
-    <p class="nota">Utiliza únicamente la clave publicable. Nunca publiques claves secretas o service_role.</p>
+    <h2>🧾 Facturas</h2>
+    <p class="nota">Módulo pendiente de integrar con los datos de Excel.</p>
     <button class="btn-secundario" onclick="volverInicio()">Volver</button>
 </section>
 
+<section id="seccion-ingresos" class="panel seccion-modulo">
+    <h2>💰 Ingresos</h2>
+    <p class="nota">Módulo pendiente de integrar con los datos de Excel.</p>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
+
+<section id="seccion-egresos" class="panel seccion-modulo">
+    <h2>💸 Egresos</h2>
+    <p class="nota">Módulo pendiente de integrar con los datos de Excel.</p>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
+
+<section id="seccion-cheques" class="panel seccion-modulo">
+    <h2>🏦 Cheques</h2>
+    <p class="nota">Módulo pendiente de integrar con los datos de Excel.</p>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
+
+<section id="seccion-procesos" class="panel seccion-modulo">
+    <h2>📋 Procesos del día</h2>
+    <p class="nota">Módulo pendiente de integrar con los datos de Excel.</p>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
+
+<section id="seccion-documentos" class="panel seccion-modulo">
+    <h2>📁 Documentos</h2>
+    <p class="nota">Módulo pendiente de integrar con los datos de Excel.</p>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
+
+<section id="seccion-cuentas" class="panel seccion-modulo">
+    <h2>💵 Saldo en cuentas</h2>
+    <p class="nota">Módulo pendiente de integrar con los datos financieros.</p>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
+
+<section id="seccion-configuracion" class="panel seccion-modulo">
+    <h2>⚙️ Configuración</h2>
+    <p>Proyecto Supabase: SIPSA</p>
+    <p>Tabla de clientes: clientes</p>
+    <p class="nota">
+        La clave publicable se encuentra en el código de la aplicación.
+        La seguridad depende también de las políticas de acceso configuradas en Supabase.
+        Nunca publiques claves secretas ni claves service_role.
+    </p>
+    <button class="btn-secundario" onclick="volverInicio()">Volver</button>
+</section>
+
+<!-- SESIÓN -->
 <section id="conexionPanel" class="panel" style="margin-top:20px;display:none">
     <h2>Sesión</h2>
-    <button type="button" class="btn-secundario" onclick="cerrarSesion()">Cerrar sesión</button>
+    <button type="button" class="btn-secundario" onclick="cerrarSesion()">
+        Cerrar sesión
+    </button>
 </section>
 
 <div id="estadoConexion">Preparando sistema.</div>
 <div class="pie">SIPSA · Sistema Empresarial</div>
+
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -245,67 +317,99 @@ th{background:#f8fafc}
 <script>
 "use strict";
 
+/* CONFIGURACIÓN */
 const URL_SUPABASE = "https://fyntemgivcsycuyhpsyz.supabase.co";
 const URL_SISTEMA = "https://sipsadominio-sudo.github.io/";
+
+/*
+  Clave publicable proporcionada para el proyecto SIPSA.
+  No introducir aquí una clave secreta ni service_role.
+*/
+const CLAVE_PUBLICABLE = "sb_publishable_zs3ngI95Bne4tKFtWtszbA_tk7WrH9l";
 
 let clienteSupabase = null;
 let clientes = [];
 let sistemaIniciado = false;
-let clavePublicable = "";
-let procesandoRecuperacion = false;
 
+/* CREAR CONEXIÓN */
+function obtenerCliente() {
+    if (!window.supabase || !window.supabase.createClient) {
+        throw new Error(
+            "No se pudo cargar Supabase. Comprueba la conexión a Internet."
+        );
+    }
+
+    if (!clienteSupabase) {
+        clienteSupabase = window.supabase.createClient(
+            URL_SUPABASE,
+            CLAVE_PUBLICABLE,
+            {
+                auth: {
+                    persistSession: true,
+                    autoRefreshToken: true,
+                    detectSessionInUrl: true,
+                    flowType: "implicit"
+                }
+            }
+        );
+    }
+
+    return clienteSupabase;
+}
+
+/* MENSAJES */
 function mostrarEstado(texto, tipo) {
-    const elemento = document.getElementById("estadoConexion");
-    elemento.textContent = texto;
-    elemento.style.background = tipo === "error" ? "#fee2e2" :
-                               tipo === "exito" ? "#dcfce7" : "#e0f2fe";
-    elemento.style.color = tipo === "error" ? "#991b1b" :
-                           tipo === "exito" ? "#166534" : "#075985";
+    const el = document.getElementById("estadoConexion");
+    el.textContent = texto;
+
+    el.style.background =
+        tipo === "error" ? "#fee2e2" :
+        tipo === "exito" ? "#dcfce7" : "#e0f2fe";
+
+    el.style.color =
+        tipo === "error" ? "#991b1b" :
+        tipo === "exito" ? "#166534" : "#075985";
 }
 
 function mostrarMensajeAcceso(texto, tipo) {
     const el = document.getElementById("mensajeAcceso");
     el.textContent = texto;
-    el.className = tipo === "error" ? "mensaje-error" :
-                   tipo === "exito" ? "mensaje-exito" : "mensaje-info";
+    el.className =
+        tipo === "error" ? "mensaje-error" :
+        tipo === "exito" ? "mensaje-exito" : "mensaje-info";
     el.style.display = "block";
 }
 
 function mostrarMensajeRecuperacion(texto, tipo) {
     const el = document.getElementById("mensajeRecuperacion");
     el.textContent = texto;
-    el.className = tipo === "error" ? "mensaje-error" :
-                   tipo === "exito" ? "mensaje-exito" : "mensaje-info";
+    el.className =
+        tipo === "error" ? "mensaje-error" :
+        tipo === "exito" ? "mensaje-exito" : "mensaje-info";
     el.style.display = "block";
 }
 
-function obtenerCliente(clave) {
-    if (!window.supabase || !window.supabase.createClient) {
-        throw new Error("No se pudo cargar Supabase. Comprueba tu conexión a Internet.");
-    }
-
-    return window.supabase.createClient(URL_SUPABASE, clave, {
-        auth: {
-            persistSession: true,
-            autoRefreshToken: true,
-            detectSessionInUrl: true,
-            flowType: "implicit"
-        }
-    });
-}
-
+/* MOSTRAR RECUPERACIÓN */
 function mostrarRecuperacion() {
     document.getElementById("loginPanel").style.display = "none";
     document.getElementById("recuperacionPanel").style.display = "block";
+
     document.getElementById("formularioSolicitud").classList.remove("oculto");
     document.getElementById("formularioNuevaClave").classList.add("oculto");
-    document.getElementById("tituloRecuperacion").textContent = "Recuperar contraseña";
+
+    document.getElementById("tituloRecuperacion").textContent =
+        "Recuperar contraseña";
+
     document.getElementById("instruccionRecuperacion").textContent =
         "Escribe el correo de tu usuario SIPSA para recibir un enlace de recuperación.";
+
     document.getElementById("mensajeRecuperacion").style.display = "none";
 
-    const email = document.getElementById("loginEmail").value.trim();
-    if (email) document.getElementById("correoRecuperacion").value = email;
+    const correo = document.getElementById("loginEmail").value.trim();
+
+    if (correo) {
+        document.getElementById("correoRecuperacion").value = correo;
+    }
 }
 
 function volverAlAcceso() {
@@ -314,150 +418,199 @@ function volverAlAcceso() {
     document.getElementById("mensajeRecuperacion").style.display = "none";
 }
 
+/* SOLICITAR RECUPERACIÓN */
 async function solicitarRecuperacion() {
     const correo = document.getElementById("correoRecuperacion").value.trim();
-    const clave = document.getElementById("supabaseKey").value.trim();
     const boton = document.getElementById("btnSolicitar");
 
-    if (!clave.startsWith("sb_publishable_")) {
+    if (!correo) {
         mostrarMensajeRecuperacion(
-            "Primero introduce la clave publicable de Supabase en la pantalla de acceso.",
+            "Escribe tu correo electrónico.",
             "error"
         );
         return;
     }
-    if (!correo) {
-        mostrarMensajeRecuperacion("Escribe tu correo electrónico.", "error");
+
+    if (!window.supabase) {
+        mostrarMensajeRecuperacion(
+            "No se pudo cargar Supabase. Comprueba tu conexión a Internet.",
+            "error"
+        );
         return;
     }
 
     boton.disabled = true;
+
     try {
-        clienteSupabase = obtenerCliente(clave);
-        const resultado = await clienteSupabase.auth.resetPasswordForEmail(correo, {
+        const supabase = obtenerCliente();
+
+        const resultado = await supabase.auth.resetPasswordForEmail(correo, {
             redirectTo: URL_SISTEMA
         });
 
-        if (resultado.error) throw resultado.error;
+        if (resultado.error) {
+            throw resultado.error;
+        }
 
         mostrarMensajeRecuperacion(
-            "Si el correo está registrado, recibirás un enlace de recuperación. Abre el mensaje más reciente.",
+            "Solicitud procesada. Revisa tu correo y la carpeta de spam. " +
+            "Si alcanzaste el límite de correos, espera antes de volver a intentarlo.",
             "exito"
         );
+
     } catch (error) {
-        mostrarMensajeRecuperacion(
-            "No se pudo enviar el enlace: " + (error.message || String(error)),
-            "error"
-        );
+        const mensaje = error.message || String(error);
+
+        if (/rate.?limit|email rate|too many requests|429/i.test(mensaje)) {
+            mostrarMensajeRecuperacion(
+                "Supabase ha limitado temporalmente el envío de correos. " +
+                "No sigas pulsando el botón. Espera a que se restablezca el límite.",
+                "error"
+            );
+        } else {
+            mostrarMensajeRecuperacion(
+                "No se pudo enviar el enlace: " + mensaje,
+                "error"
+            );
+        }
     } finally {
         boton.disabled = false;
     }
 }
 
+/* DETECTAR ENLACE DE RECUPERACIÓN */
 function detectarEnlaceRecuperacion() {
     const hash = window.location.hash || "";
-    const params = new URLSearchParams(hash.startsWith("#") ? hash.slice(1) : hash);
-    const tipo = params.get("type");
-    const error = params.get("error_description") || params.get("error");
+    const parametros = new URLSearchParams(
+        hash.startsWith("#") ? hash.slice(1) : hash
+    );
+
+    const tipo = parametros.get("type");
+    const error = parametros.get("error_description") ||
+                  parametros.get("error");
 
     if (error) {
         document.getElementById("loginPanel").style.display = "none";
         document.getElementById("recuperacionPanel").style.display = "block";
+
         document.getElementById("formularioSolicitud").classList.add("oculto");
         document.getElementById("formularioNuevaClave").classList.add("oculto");
+
         mostrarMensajeRecuperacion(
-            "El enlace de recuperación no es válido o ha caducado. Solicita uno nuevo. Detalle: " +
-            decodeURIComponent(error.replace(/\+/g, " ")),
+            "El enlace de recuperación no es válido o ha caducado. " +
+            "Solicita uno nuevo cuando sea posible. " +
+            error.replace(/\+/g, " "),
             "error"
         );
-        return;
+
+        return true;
     }
 
-    if (tipo === "recovery" || params.has("access_token")) {
+    if (tipo === "recovery" || parametros.has("access_token")) {
         document.getElementById("loginPanel").style.display = "none";
         document.getElementById("recuperacionPanel").style.display = "block";
+
         document.getElementById("formularioSolicitud").classList.add("oculto");
         document.getElementById("formularioNuevaClave").classList.remove("oculto");
-        document.getElementById("tituloRecuperacion").textContent = "Crear nueva contraseña";
-        document.getElementById("instruccionRecuperacion").textContent =
-            "Escribe una contraseña nueva y confírmala. No utilices tu contraseña de GitHub.";
-        procesandoRecuperacion = true;
 
-        const clave = document.getElementById("supabaseKey").value.trim();
-        if (clave.startsWith("sb_publishable_")) {
-            clienteSupabase = obtenerCliente(clave);
-        }
+        document.getElementById("tituloRecuperacion").textContent =
+            "Crear nueva contraseña";
+
+        document.getElementById("instruccionRecuperacion").textContent =
+            "Escribe tu nueva contraseña y confírmala.";
 
         mostrarEstado(
-            "Enlace de recuperación detectado. Introduce la clave publicable y guarda tu nueva contraseña.",
+            "Enlace de recuperación detectado. Completa el formulario.",
             "info"
         );
+
+        return true;
     }
+
+    return false;
 }
 
+/* GUARDAR NUEVA CONTRASEÑA */
 async function guardarNuevaClave() {
     const nueva = document.getElementById("nuevaClave").value;
     const confirmar = document.getElementById("confirmarClave").value;
-    const clave = document.getElementById("supabaseKey").value.trim();
     const boton = document.getElementById("btnGuardarClave");
-
-    if (!clave.startsWith("sb_publishable_")) {
-        mostrarMensajeRecuperacion(
-            "Introduce primero la clave publicable de Supabase en la pantalla de acceso y vuelve a abrir el enlace de recuperación.",
-            "error"
-        );
-        return;
-    }
 
     if (nueva.length < 8) {
         mostrarMensajeRecuperacion(
-            "Por seguridad, utiliza una contraseña de al menos 8 caracteres.",
+            "La contraseña debe tener al menos 8 caracteres.",
             "error"
         );
         return;
     }
 
     if (nueva !== confirmar) {
-        mostrarMensajeRecuperacion("Las contraseñas no coinciden.", "error");
+        mostrarMensajeRecuperacion(
+            "Las contraseñas no coinciden.",
+            "error"
+        );
         return;
     }
 
     boton.disabled = true;
+
     try {
-        if (!clienteSupabase) clienteSupabase = obtenerCliente(clave);
+        const supabase = obtenerCliente();
 
-        const sesion = await clienteSupabase.auth.getSession();
-        if (sesion.error) throw sesion.error;
+        /*
+          Supabase procesa el enlace de recuperación al inicializar
+          el cliente, gracias a detectSessionInUrl.
+        */
+        const resultadoSesion = await supabase.auth.getSession();
 
-        if (!sesion.data.session) {
+        if (resultadoSesion.error) {
+            throw resultadoSesion.error;
+        }
+
+        if (!resultadoSesion.data.session) {
             throw new Error(
-                "No se detectó una sesión de recuperación válida. Solicita un enlace nuevo y ábrelo en este mismo navegador."
+                "No se encontró una sesión válida de recuperación. " +
+                "El enlace podría haber caducado. Solicita uno nuevo."
             );
         }
 
-        const resultado = await clienteSupabase.auth.updateUser({
+        const resultado = await supabase.auth.updateUser({
             password: nueva
         });
 
-        if (resultado.error) throw resultado.error;
+        if (resultado.error) {
+            throw resultado.error;
+        }
 
         document.getElementById("nuevaClave").value = "";
         document.getElementById("confirmarClave").value = "";
+
         document.getElementById("formularioNuevaClave").classList.add("oculto");
 
         mostrarMensajeRecuperacion(
-            "Contraseña actualizada correctamente. Vuelve al inicio de sesión e ingresa con tu correo y la contraseña nueva.",
+            "Contraseña actualizada correctamente. " +
+            "Ya puedes volver al inicio de sesión.",
             "exito"
         );
 
         mostrarEstado("Contraseña actualizada correctamente.", "exito");
-        procesandoRecuperacion = false;
 
-        await clienteSupabase.auth.signOut();
-        window.history.replaceState({}, document.title, window.location.pathname);
+        await supabase.auth.signOut();
+
+        /*
+          Quitamos el token de la dirección después de terminar
+          correctamente el proceso.
+        */
+        window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname
+        );
+
     } catch (error) {
         mostrarMensajeRecuperacion(
-            "No se pudo actualizar la contraseña: " + (error.message || String(error)),
+            "No se pudo actualizar la contraseña: " +
+            (error.message || String(error)),
             "error"
         );
     } finally {
@@ -465,85 +618,122 @@ async function guardarNuevaClave() {
     }
 }
 
+/* INICIAR SESIÓN */
 async function conectarSupabase() {
-    const clave = document.getElementById("supabaseKey").value.trim();
     const email = document.getElementById("loginEmail").value.trim();
     const password = document.getElementById("loginPassword").value;
     const boton = document.getElementById("btnConectar");
 
-    if (!clave.startsWith("sb_publishable_")) {
-        mostrarMensajeAcceso("Introduce la clave publicable correcta de Supabase.", "error");
-        return;
-    }
+    document.getElementById("mensajeAcceso").style.display = "none";
+
     if (!email || !password) {
-        mostrarMensajeAcceso("Escribe tu correo y contraseña.", "error");
+        mostrarMensajeAcceso(
+            "Escribe tu correo electrónico y contraseña.",
+            "error"
+        );
         return;
     }
 
     boton.disabled = true;
-    try {
-        clavePublicable = clave;
-        clienteSupabase = obtenerCliente(clave);
-        mostrarEstado("Iniciando sesión...");
 
-        const acceso = await clienteSupabase.auth.signInWithPassword({
+    try {
+        const supabase = obtenerCliente();
+
+        mostrarEstado("Conectando con Supabase...");
+
+        const acceso = await supabase.auth.signInWithPassword({
             email: email,
             password: password
         });
 
-        if (acceso.error) throw acceso.error;
+        if (acceso.error) {
+            throw acceso.error;
+        }
 
-        const prueba = await clienteSupabase.from("clientes").select("id").limit(1);
+        /*
+          Comprobamos el acceso a clientes.
+          Si falla, informamos por separado del error de permisos o tabla.
+        */
+        const prueba = await supabase
+            .from("clientes")
+            .select("id")
+            .limit(1);
+
         if (prueba.error) {
-            await clienteSupabase.auth.signOut();
-            throw new Error("El inicio de sesión funcionó, pero no se pudo consultar la tabla clientes: " + prueba.error.message);
+            throw new Error(
+                "La sesión se inició, pero no se pudo consultar la tabla clientes: " +
+                prueba.error.message
+            );
         }
 
         sistemaIniciado = true;
+
         document.getElementById("loginPassword").value = "";
         document.getElementById("loginPanel").style.display = "none";
         document.getElementById("recuperacionPanel").style.display = "none";
         document.getElementById("menuModulos").style.display = "grid";
         document.getElementById("conexionPanel").style.display = "block";
         document.querySelector(".bienvenida").style.display = "block";
+
         mostrarEstado("Conexión correcta. Sesión iniciada.", "exito");
+
     } catch (error) {
-        sistemaIniciado = false;
         mostrarMensajeAcceso(
-            "No se pudo iniciar sesión: " + (error.message || String(error)),
+            "No se pudo iniciar sesión: " +
+            (error.message || String(error)),
             "error"
         );
-        mostrarEstado("No se pudo iniciar sesión.", "error");
+
+        mostrarEstado("No se pudo completar el inicio de sesión.", "error");
+
     } finally {
         boton.disabled = false;
     }
 }
 
+/* CERRAR SESIÓN */
 async function cerrarSesion() {
     try {
-        if (clienteSupabase) {
-            const resultado = await clienteSupabase.auth.signOut();
-            if (resultado.error) throw resultado.error;
+        const supabase = obtenerCliente();
+        const resultado = await supabase.auth.signOut();
+
+        if (resultado.error) {
+            throw resultado.error;
         }
+
         sistemaIniciado = false;
         clientes = [];
+
         document.getElementById("menuModulos").style.display = "none";
         document.getElementById("conexionPanel").style.display = "none";
         document.getElementById("loginPanel").style.display = "block";
+
         document.getElementById("listaClientes").innerHTML =
             "<tr><td colspan='6'>Inicia sesión para consultar los clientes.</td></tr>";
+
         ocultarSecciones();
         mostrarEstado("Sesión cerrada.");
+
     } catch (error) {
-        mostrarEstado("No se pudo cerrar sesión: " + error.message, "error");
+        mostrarEstado(
+            "No se pudo cerrar sesión: " + error.message,
+            "error"
+        );
     }
 }
 
+/* NAVEGACIÓN */
 function ocultarSecciones() {
     document.getElementById("clientesModulo").style.display = "none";
-    document.querySelectorAll(".seccion-modulo").forEach(s => s.style.display = "none");
+
+    document.querySelectorAll(".seccion-modulo").forEach(seccion => {
+        seccion.style.display = "none";
+    });
+
     document.querySelector(".bienvenida").style.display = "block";
-    document.getElementById("menuModulos").style.display = sistemaIniciado ? "grid" : "none";
+
+    document.getElementById("menuModulos").style.display =
+        sistemaIniciado ? "grid" : "none";
 }
 
 function abrirClientes() {
@@ -551,10 +741,16 @@ function abrirClientes() {
         mostrarEstado("Inicia sesión para consultar clientes.", "error");
         return;
     }
+
     document.querySelector(".bienvenida").style.display = "none";
     document.getElementById("menuModulos").style.display = "none";
-    document.querySelectorAll(".seccion-modulo").forEach(s => s.style.display = "none");
+
+    document.querySelectorAll(".seccion-modulo").forEach(seccion => {
+        seccion.style.display = "none";
+    });
+
     document.getElementById("clientesModulo").style.display = "block";
+
     cargarClientes();
 }
 
@@ -564,28 +760,50 @@ function volverInicio() {
 
 function mostrarModulo(nombre) {
     if (!sistemaIniciado) return;
+
     document.querySelector(".bienvenida").style.display = "none";
     document.getElementById("menuModulos").style.display = "none";
     document.getElementById("clientesModulo").style.display = "none";
-    document.querySelectorAll(".seccion-modulo").forEach(s => s.style.display = "none");
+
+    document.querySelectorAll(".seccion-modulo").forEach(seccion => {
+        seccion.style.display = "none";
+    });
+
     const seccion = document.getElementById("seccion-" + nombre);
-    if (seccion) seccion.style.display = "block";
+
+    if (seccion) {
+        seccion.style.display = "block";
+    }
 }
 
+/* CARGAR CLIENTES */
 async function cargarClientes() {
-    if (!clienteSupabase || !sistemaIniciado) return;
+    if (!sistemaIniciado) return;
 
     const lista = document.getElementById("listaClientes");
     lista.innerHTML = "<tr><td colspan='6'>Cargando clientes...</td></tr>";
 
     try {
-        const resultado = await clienteSupabase.from("clientes").select("*").order("empresa", {ascending:true});
-        if (resultado.error) throw resultado.error;
+        const resultado = await obtenerCliente()
+            .from("clientes")
+            .select("*")
+            .order("empresa", {ascending:true});
+
+        if (resultado.error) {
+            throw resultado.error;
+        }
+
         clientes = resultado.data || [];
         mostrarClientes(clientes);
+
     } catch (error) {
-        lista.innerHTML = "<tr><td colspan='6'>No se pudieron cargar los clientes.</td></tr>";
-        mostrarMensaje("Error al cargar clientes: " + error.message, false);
+        lista.innerHTML =
+            "<tr><td colspan='6'>No se pudieron cargar los clientes.</td></tr>";
+
+        mostrarMensaje(
+            "Error al cargar clientes: " + error.message,
+            false
+        );
     }
 }
 
@@ -594,49 +812,78 @@ function mostrarClientes(datos) {
     lista.innerHTML = "";
 
     if (!datos || datos.length === 0) {
-        lista.innerHTML = "<tr><td colspan='6'>No hay clientes registrados.</td></tr>";
+        lista.innerHTML =
+            "<tr><td colspan='6'>No hay clientes registrados.</td></tr>";
         return;
     }
 
     datos.forEach(c => {
         const fila = document.createElement("tr");
-        [c.empresa, c.area ?? c["área"], c.nombre_contacto,
-         c.telefono ?? c["teléfono"], c.correo_electronico, c.estado]
-        .forEach(valor => {
+
+        const valores = [
+            c.empresa,
+            c.area ?? c["área"],
+            c.nombre_contacto,
+            c.telefono ?? c["teléfono"],
+            c.correo_electronico,
+            c.estado
+        ];
+
+        valores.forEach(valor => {
             const celda = document.createElement("td");
             celda.textContent = valor == null ? "" : String(valor);
             fila.appendChild(celda);
         });
+
         lista.appendChild(fila);
     });
 }
 
 function filtrarClientes() {
-    const texto = document.getElementById("buscarCliente").value.toLowerCase().trim();
-    mostrarClientes(clientes.filter(c =>
-        [c.empresa, c.area, c["área"], c.nombre_contacto,
-         c.telefono, c["teléfono"], c.correo_electronico]
-        .some(v => String(v || "").toLowerCase().includes(texto))
-    ));
+    const texto = document
+        .getElementById("buscarCliente")
+        .value.toLowerCase().trim();
+
+    const filtrados = clientes.filter(c => {
+        const valores = [
+            c.empresa,
+            c.area,
+            c["área"],
+            c.nombre_contacto,
+            c.telefono,
+            c["teléfono"],
+            c.correo_electronico
+        ];
+
+        return valores.some(valor =>
+            String(valor || "").toLowerCase().includes(texto)
+        );
+    });
+
+    mostrarClientes(filtrados);
 }
 
+/* IMPORTAR EXCEL */
 function seleccionarExcel() {
     if (!sistemaIniciado) {
         mostrarMensaje("Primero inicia sesión.", false);
         return;
     }
+
     document.getElementById("archivoExcel").value = "";
     document.getElementById("archivoExcel").click();
 }
 
 async function procesarExcel(evento) {
     const archivo = evento.target.files[0];
+
     if (!archivo) return;
 
-    if (!sistemaIniciado || !clienteSupabase) {
+    if (!sistemaIniciado) {
         mostrarMensaje("Primero inicia sesión.", false);
         return;
     }
+
     if (typeof XLSX === "undefined") {
         mostrarMensaje("No se pudo cargar la biblioteca de Excel.", false);
         return;
@@ -644,55 +891,98 @@ async function procesarExcel(evento) {
 
     try {
         mostrarMensaje("Leyendo archivo Excel...", "info");
-        const libro = XLSX.read(await archivo.arrayBuffer(), {type:"array"});
+
+        const libro = XLSX.read(
+            await archivo.arrayBuffer(),
+            {type:"array"}
+        );
 
         if (!libro.SheetNames.includes("EMPRESAS")) {
             throw new Error("El archivo no contiene la hoja EMPRESAS.");
         }
 
-        const filas = XLSX.utils.sheet_to_json(libro.Sheets["EMPRESAS"], {header:1, defval:""});
-        if (filas.length < 2) throw new Error("La hoja EMPRESAS no contiene registros.");
+        const filas = XLSX.utils.sheet_to_json(
+            libro.Sheets["EMPRESAS"],
+            {header:1, defval:""}
+        );
+
+        if (filas.length < 2) {
+            throw new Error("La hoja EMPRESAS no contiene registros.");
+        }
 
         const encabezados = filas[0].map(normalizarTexto);
+
         const ie = buscarColumna(encabezados, ["empresa"]);
         const ia = buscarColumna(encabezados, ["area"]);
-        const ic = buscarColumna(encabezados, ["nombre del colaborador","nombre colaborador","nombre contacto"]);
+        const ic = buscarColumna(encabezados, [
+            "nombre del colaborador",
+            "nombre colaborador",
+            "nombre contacto"
+        ]);
         const it = buscarColumna(encabezados, ["telefono"]);
-        const im = buscarColumna(encabezados, ["correo electronico","correo"]);
+        const im = buscarColumna(encabezados, [
+            "correo electronico",
+            "correo"
+        ]);
 
-        if ([ie,ia,ic,it,im].some(i => i === -1)) {
-            throw new Error("Faltan encabezados. Se requieren Empresa, área, nombre del colaborador, teléfono y correo electrónico.");
+        if ([ie, ia, ic, it, im].some(i => i === -1)) {
+            throw new Error(
+                "Faltan encabezados. Se requieren Empresa, área, " +
+                "nombre del colaborador, teléfono y correo electrónico."
+            );
         }
 
         const registros = [];
-        for (let i=1; i<filas.length; i++) {
+
+        for (let i = 1; i < filas.length; i++) {
             const f = filas[i];
+
             const empresa = String(f[ie] || "").trim();
             const area = String(f[ia] || "").trim();
             const contacto = String(f[ic] || "").trim();
             const telefono = String(f[it] || "").trim();
             const correo = String(f[im] || "").trim();
 
-            if (!(empresa || area || contacto || telefono || correo)) continue;
+            if (!(empresa || area || contacto || telefono || correo)) {
+                continue;
+            }
 
             registros.push({
-                excel_row_key:"EMPRESAS-" + (i+1),
-                empresa, area, nombre_contacto:contacto,
-                telefono, correo_electronico:correo, estado:"activo"
+                excel_row_key: "EMPRESAS-" + (i + 1),
+                empresa: empresa,
+                area: area,
+                nombre_contacto: contacto,
+                telefono: telefono,
+                correo_electronico: correo,
+                estado: "activo"
             });
         }
 
-        if (!registros.length) throw new Error("No se encontraron registros para importar.");
+        if (!registros.length) {
+            throw new Error("No se encontraron registros para importar.");
+        }
 
-        const consulta = await clienteSupabase.from("clientes").select("id,excel_row_key");
-        if (consulta.error) throw consulta.error;
+        const supabase = obtenerCliente();
+
+        const consulta = await supabase
+            .from("clientes")
+            .select("id,excel_row_key");
+
+        if (consulta.error) {
+            throw consulta.error;
+        }
 
         const mapa = new Map();
+
         (consulta.data || []).forEach(c => {
-            if (c.excel_row_key) mapa.set(String(c.excel_row_key), c.id);
+            if (c.excel_row_key) {
+                mapa.set(String(c.excel_row_key), c.id);
+            }
         });
 
-        let nuevos=0, actualizados=0, errores=0;
+        let nuevos = 0;
+        let actualizados = 0;
+        let errores = 0;
 
         for (const r of registros) {
             try {
@@ -700,41 +990,64 @@ async function procesarExcel(evento) {
                 let res;
 
                 if (id) {
-                    res = await clienteSupabase.from("clientes").update({
-                        empresa:r.empresa, area:r.area,
-                        nombre_contacto:r.nombre_contacto,
-                        telefono:r.telefono,
-                        correo_electronico:r.correo_electronico,
-                        estado:r.estado,
-                        updated_at:new Date().toISOString()
-                    }).eq("id",id);
+                    res = await supabase
+                        .from("clientes")
+                        .update({
+                            empresa: r.empresa,
+                            area: r.area,
+                            nombre_contacto: r.nombre_contacto,
+                            telefono: r.telefono,
+                            correo_electronico: r.correo_electronico,
+                            estado: r.estado,
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq("id", id);
+
                     if (res.error) throw res.error;
+
                     actualizados++;
+
                 } else {
-                    res = await clienteSupabase.from("clientes").insert(r);
+                    res = await supabase
+                        .from("clientes")
+                        .insert(r);
+
                     if (res.error) throw res.error;
+
                     nuevos++;
                 }
-            } catch (e) {
-                console.error(e);
+
+            } catch (error) {
+                console.error("Error en registro de Excel:", error);
                 errores++;
             }
         }
 
-        mostrarMensaje("Importación terminada. Nuevos: " + nuevos +
-            " | Actualizados: " + actualizados + " | Errores: " + errores,
-            errores === 0);
+        mostrarMensaje(
+            "Importación terminada. Nuevos: " + nuevos +
+            " | Actualizados: " + actualizados +
+            " | Errores: " + errores,
+            errores === 0
+        );
+
         await cargarClientes();
+
     } catch (error) {
-        mostrarMensaje("Error al procesar Excel: " + error.message, false);
+        mostrarMensaje(
+            "Error al procesar Excel: " + error.message,
+            false
+        );
     } finally {
         evento.target.value = "";
     }
 }
 
 function normalizarTexto(texto) {
-    return String(texto || "").toLowerCase()
-        .normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
+    return String(texto || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
 }
 
 function buscarColumna(encabezados, nombres) {
@@ -743,42 +1056,39 @@ function buscarColumna(encabezados, nombres) {
 
 function mostrarMensaje(texto, tipo) {
     const m = document.getElementById("mensaje");
+
     m.textContent = texto;
-    m.className = tipo === "info" ? "mensaje-info" :
-                  tipo === true ? "mensaje-exito" : "mensaje-error";
+
+    m.className =
+        tipo === "info" ? "mensaje-info" :
+        tipo === true ? "mensaje-exito" : "mensaje-error";
+
     m.style.display = "block";
 }
 
+/* INICIALIZACIÓN */
 window.addEventListener("load", async function() {
-    const params = new URLSearchParams(window.location.hash.slice(1));
-    const tipo = params.get("type");
-    const hayToken = params.has("access_token");
-    const error = params.get("error_description") || params.get("error");
+    try {
+        /*
+          Crear el cliente al cargar la página permite a Supabase
+          procesar el token del enlace de recuperación.
+        */
+        obtenerCliente();
 
-    if (error || tipo === "recovery" || hayToken) {
-        document.getElementById("loginPanel").style.display = "none";
-        document.getElementById("recuperacionPanel").style.display = "block";
+        const esRecuperacion = detectarEnlaceRecuperacion();
 
-        if (error) {
-            document.getElementById("formularioSolicitud").classList.add("oculto");
-            document.getElementById("formularioNuevaClave").classList.add("oculto");
-            mostrarMensajeRecuperacion(
-                "El enlace no es válido o caducó. Solicita uno nuevo. " +
-                decodeURIComponent(error.replace(/\+/g," ")),
-                "error"
-            );
-        } else {
-            document.getElementById("formularioSolicitud").classList.add("oculto");
-            document.getElementById("formularioNuevaClave").classList.remove("oculto");
-            document.getElementById("tituloRecuperacion").textContent = "Crear nueva contraseña";
-            document.getElementById("instruccionRecuperacion").textContent =
-                "Introduce la clave publicable de Supabase en la pantalla de acceso antes de continuar si todavía no la has guardado.";
-            mostrarEstado("Enlace de recuperación detectado. Completa el formulario.", "info");
+        if (!esRecuperacion) {
+            mostrarEstado("Listo. Ingresa tu correo y contraseña.");
         }
-    } else {
-        mostrarEstado("Listo. Inicia sesión para acceder al sistema.");
+
+    } catch (error) {
+        mostrarEstado(
+            "No se pudo inicializar el sistema: " + error.message,
+            "error"
+        );
     }
 });
 </script>
+
 </body>
 </html>
