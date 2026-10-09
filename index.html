@@ -67,11 +67,12 @@ main {
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,.08);
     cursor: pointer;
-    transition: transform .15s;
+    transition: transform .2s, box-shadow .2s;
 }
 
 .modulo:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 14px rgba(0,0,0,.12);
 }
 
 .modulo h3 {
@@ -122,11 +123,6 @@ button {
     min-height: 42px;
 }
 
-button:disabled {
-    opacity: .6;
-    cursor: wait;
-}
-
 .btn-secundario {
     background: #e2e8f0;
     color: #0f172a;
@@ -150,13 +146,14 @@ button:disabled {
     font-size: 15px;
 }
 
-.campo {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    margin-bottom: 12px;
-    font-size: 16px;
+input[type="text"],
+input[type="password"] {
+    font-family: Arial, sans-serif;
+}
+
+input:focus {
+    outline: 2px solid #93c5fd;
+    border-color: #2563eb;
 }
 
 .tabla-contenedor {
@@ -170,7 +167,8 @@ table {
     min-width: 750px;
 }
 
-th, td {
+th,
+td {
     padding: 12px;
     border-bottom: 1px solid #e2e8f0;
     text-align: left;
@@ -214,35 +212,33 @@ th {
     display: none;
 }
 
-#modulosSistema,
-#bienvenidaSistema {
-    display: none;
-}
-
 #conexionPanel {
-    margin: 25px auto 0;
-    max-width: 620px;
+    margin-top: 20px;
 }
 
-#conexionPanel h2 {
-    margin-bottom: 12px;
+.etiqueta {
+    display: block;
+    font-weight: bold;
+    margin: 8px 0;
 }
 
-.texto-acceso {
-    margin-bottom: 12px;
-    color: #475569;
-    line-height: 1.5;
-}
-
-#botonLogin {
+.campo-acceso {
     width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-size: 16px;
 }
 
-#botonCerrarSesion {
+.nota-seguridad {
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.5;
     margin-top: 12px;
 }
 
-@media(max-width: 650px) {
+@media (max-width: 650px) {
     main {
         padding: 12px;
     }
@@ -266,9 +262,11 @@ th {
     .panel-header button {
         width: 100%;
     }
+}
 
-    .panel-header h2 {
-        width: 100%;
+@media (max-width: 380px) {
+    .modulos {
+        grid-template-columns: 1fr;
     }
 }
 </style>
@@ -277,136 +275,67 @@ th {
 <body>
 
 <header>
-    <h1>SIPSA | Sistema Empresarial</h1>
+    <h1>Sistema Empresarial SIPSA</h1>
 </header>
 
 <main>
 
-    <!-- ACCESO -->
-    <section class="panel" id="conexionPanel">
-
-        <h2>Acceso al Sistema Empresarial</h2>
-
-        <p class="texto-acceso">
-            Ingresa con el correo electrónico y la contraseña de tu usuario autorizado.
-        </p>
-
-        <form id="formularioLogin">
-
-            <label for="loginEmail"
-                   style="display:block;font-weight:bold;margin:8px 0">
-                Correo electrónico
-            </label>
-
-            <input
-                id="loginEmail"
-                class="campo"
-                type="email"
-                autocomplete="username"
-                placeholder="Correo electrónico"
-                required
-            >
-
-            <label for="loginPassword"
-                   style="display:block;font-weight:bold;margin:8px 0">
-                Contraseña
-            </label>
-
-            <input
-                id="loginPassword"
-                class="campo"
-                type="password"
-                autocomplete="current-password"
-                placeholder="Contraseña"
-                required
-            >
-
-            <button
-                type="submit"
-                class="btn-excel"
-                id="botonLogin">
-                Iniciar sesión
-            </button>
-
-        </form>
-
-        <button
-            type="button"
-            class="btn-secundario"
-            id="botonCerrarSesion"
-            onclick="cerrarSesion()"
-            style="width:100%">
-            Cerrar sesión
-        </button>
-
-    </section>
-
-    <div id="estadoConexion" role="status" aria-live="polite">
-        Preparando el acceso al sistema...
-    </div>
-
-    <!-- SISTEMA -->
-    <section id="bienvenidaSistema" class="bienvenida"
-             style="margin-top:20px">
-
+    <section class="bienvenida">
         <h2>Panel principal</h2>
-
-        <p>
-            Bienvenido al Sistema Empresarial SIPSA.
-        </p>
-
+        <p>Bienvenido al sistema empresarial.</p>
     </section>
 
-    <section class="modulos" id="modulosSistema">
+    <section class="modulos">
 
         <div class="modulo" onclick="abrirClientes()">
             <h3>👥 Clientes</h3>
             <p>Consulta y actualización de clientes.</p>
         </div>
 
-        <div class="modulo" onclick="mostrarModulo('Facturas')">
+        <div class="modulo">
             <h3>🧾 Facturas</h3>
             <p>Administración de facturas.</p>
         </div>
 
-        <div class="modulo" onclick="mostrarModulo('Ingresos')">
+        <div class="modulo">
             <h3>💰 Ingresos</h3>
             <p>Control de ingresos.</p>
         </div>
 
-        <div class="modulo" onclick="mostrarModulo('Egresos')">
+        <div class="modulo">
             <h3>💸 Egresos</h3>
             <p>Control de egresos y salarios.</p>
         </div>
 
-        <div class="modulo" onclick="mostrarModulo('Cheques')">
+        <div class="modulo">
             <h3>🏦 Cheques</h3>
             <p>Control de cheques emitidos.</p>
         </div>
 
-        <div class="modulo" onclick="mostrarModulo('Procesos del día')">
+        <div class="modulo">
             <h3>📋 Procesos del día</h3>
             <p>Seguimiento de procesos.</p>
         </div>
 
-        <div class="modulo" onclick="mostrarModulo('Documentos')">
+        <div class="modulo">
             <h3>📁 Documentos</h3>
             <p>Documentos de la empresa.</p>
         </div>
 
-        <div class="modulo" onclick="mostrarModulo('Saldo en cuentas')">
+        <div class="modulo">
             <h3>💵 Saldo en cuentas</h3>
             <p>Control financiero.</p>
         </div>
 
-        <div class="modulo" onclick="mostrarModulo('Configuración')">
+        <div class="modulo">
             <h3>⚙️ Configuración</h3>
             <p>Configuración del sistema.</p>
         </div>
 
     </section>
 
-    <!-- CLIENTES -->
+    <!-- MODULO CLIENTES -->
+
     <section id="clientesModulo">
 
         <div class="panel">
@@ -437,8 +366,7 @@ th {
                 type="file"
                 id="archivoExcel"
                 accept=".xlsx,.xls"
-                onchange="procesarExcel(event)"
-            >
+                onchange="procesarExcel(event)">
 
             <div id="mensaje"></div>
 
@@ -447,8 +375,7 @@ th {
                 id="buscarCliente"
                 class="buscar"
                 placeholder="🔎 Buscar por empresa, contacto, teléfono o correo..."
-                oninput="filtrarClientes()"
-            >
+                oninput="filtrarClientes()">
 
             <div class="tabla-contenedor">
 
@@ -464,7 +391,8 @@ th {
                         </tr>
                     </thead>
 
-                    <tbody id="listaClientes"></tbody>
+                    <tbody id="listaClientes">
+                    </tbody>
                 </table>
 
             </div>
@@ -473,37 +401,83 @@ th {
 
     </section>
 
-    <section id="otroModulo" class="panel"
-             style="display:none;margin-top:25px">
+    <!-- ACCESO AL SISTEMA -->
 
-        <h2 id="tituloOtroModulo"></h2>
+    <section class="panel" id="conexionPanel">
 
-        <p style="margin-top:12px">
-            Este módulo todavía está pendiente de conectar con sus datos de Excel.
+        <h2 style="margin-bottom:12px">
+            Acceso al Sistema Empresarial SIPSA
+        </h2>
+
+        <p style="color:#475569;line-height:1.5">
+            Ingresa con el usuario asignado y la contraseña configurada
+            para esa cuenta en Supabase.
         </p>
+
+        <label for="loginEmail" class="etiqueta">
+            Usuario
+        </label>
+
+        <input
+            id="loginEmail"
+            type="text"
+            class="campo-acceso"
+            autocomplete="username"
+            placeholder="ventas"
+            value="ventas">
+
+        <label for="loginPassword" class="etiqueta">
+            PIN / contraseña
+        </label>
+
+        <input
+            id="loginPassword"
+            type="password"
+            class="campo-acceso"
+            autocomplete="current-password"
+            placeholder="Escribe tu contraseña">
+
+        <button
+            type="button"
+            class="btn-excel"
+            onclick="conectarSupabase()">
+            Iniciar sesión
+        </button>
 
         <button
             type="button"
             class="btn-secundario"
-            onclick="volverInicio()"
-            style="margin-top:18px">
-            Volver al panel principal
+            onclick="cerrarSesion()"
+            style="margin-left:8px">
+            Cerrar sesión
         </button>
+
+        <p class="nota-seguridad">
+            El campo PIN / contraseña utiliza actualmente la contraseña
+            de la cuenta de Supabase. Todavía no es un PIN independiente.
+        </p>
 
     </section>
 
+    <div id="estadoConexion">
+        Ingresa con el usuario ventas y la contraseña configurada en Supabase.
+    </div>
+
 </main>
 
+<!-- BIBLIOTECAS -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 
 <script>
 "use strict";
 
 /*
-  CONFIGURACIÓN DEL PROYECTO SIPSA
-  La clave publicable está integrada para no pedirla al usuario.
-  No colocar aquí una clave secret ni service_role.
+========================================================
+CONFIGURACION DEL SISTEMA EMPRESARIAL SIPSA
+========================================================
 */
 
 const URL_SUPABASE =
@@ -512,52 +486,90 @@ const URL_SUPABASE =
 const CLAVE_PUBLICABLE =
     "sb_publishable_zs3ngI95Bne4tKFtWtszbA_tk7WrH9l";
 
+/*
+El usuario escribe "ventas" en el formulario.
+El sistema lo relaciona con el correo registrado en Supabase.
+*/
+
+const USUARIOS_SIPSA = {
+    "ventas": "Ventas@sipsapoligrafía.com"
+};
+
 let clienteSupabase = null;
 let clientes = [];
 let sistemaIniciado = false;
-let sesionActual = null;
 
 
-/* MENSAJES */
+/*
+========================================================
+MENSAJES DEL SISTEMA
+========================================================
+*/
 
-function mostrarEstado(texto) {
-    document.getElementById("estadoConexion").textContent = texto;
-}
+function mostrarEstado(texto, clase) {
+    const estado = document.getElementById("estadoConexion");
 
-function mostrarMensaje(texto, tipo) {
-    const mensaje = document.getElementById("mensaje");
-
-    mensaje.textContent = texto;
-
-    if (tipo === "info") {
-        mensaje.className = "mensaje-info";
-    } else {
-        mensaje.className = tipo
-            ? "mensaje-exito"
-            : "mensaje-error";
-    }
-
-    mensaje.style.display = "block";
+    estado.textContent = texto;
+    estado.className = clase || "";
 }
 
 
-/* INICIALIZAR SUPABASE */
+/*
+========================================================
+INICIAR SESION EN SUPABASE
+========================================================
+*/
 
-function inicializarSupabase() {
+async function conectarSupabase() {
 
-    if (!window.supabase ||
-        typeof window.supabase.createClient !== "function") {
+    const usuario = document
+        .getElementById("loginEmail")
+        .value
+        .trim()
+        .toLowerCase();
 
-        throw new Error(
-            "No se cargó la biblioteca de Supabase. Comprueba tu conexión a Internet y recarga la página."
+    const email = USUARIOS_SIPSA[usuario];
+
+    const password = document
+        .getElementById("loginPassword")
+        .value;
+
+    const clave = CLAVE_PUBLICABLE;
+
+    if (
+        !window.supabase ||
+        typeof window.supabase.createClient !== "function"
+    ) {
+        mostrarEstado(
+            "No se pudo cargar la biblioteca de Supabase. " +
+            "Revisa la conexión a Internet y vuelve a cargar la página."
         );
+        return;
     }
 
-    if (!clienteSupabase) {
+    if (!email) {
+        mostrarEstado(
+            "Usuario no reconocido. Para esta cuenta escribe: ventas"
+        );
+        return;
+    }
+
+    if (!password) {
+        mostrarEstado(
+            "Escribe la contraseña que configuraste para la cuenta en Supabase."
+        );
+        return;
+    }
+
+    try {
+
+        mostrarEstado(
+            "Conectando con Supabase e iniciando sesión..."
+        );
 
         clienteSupabase = window.supabase.createClient(
             URL_SUPABASE,
-            CLAVE_PUBLICABLE,
+            clave,
             {
                 auth: {
                     persistSession: true,
@@ -566,144 +578,72 @@ function inicializarSupabase() {
                 }
             }
         );
-    }
 
-    return clienteSupabase;
-}
-
-
-/* INICIAR SESIÓN */
-
-document.getElementById("formularioLogin")
-    .addEventListener("submit", async function(event) {
-
-        event.preventDefault();
-
-        await conectarSupabase();
-    });
-
-
-async function conectarSupabase() {
-
-    const email = document.getElementById("loginEmail")
-        .value.trim();
-
-    const password = document.getElementById("loginPassword")
-        .value;
-
-    const boton = document.getElementById("botonLogin");
-
-    if (!email || !password) {
-
-        mostrarEstado(
-            "Escribe tu correo electrónico y contraseña."
-        );
-
-        return;
-    }
-
-    boton.disabled = true;
-    boton.textContent = "Verificando acceso...";
-
-    try {
-
-        mostrarEstado(
-            "Conectando con Supabase e iniciando sesión..."
-        );
-
-        const supabase = inicializarSupabase();
-
-        const resultado =
-            await supabase.auth.signInWithPassword({
+        const acceso =
+            await clienteSupabase.auth.signInWithPassword({
                 email: email,
                 password: password
             });
 
-        if (resultado.error) {
-            throw resultado.error;
+        if (acceso.error) {
+            throw acceso.error;
         }
 
-        if (!resultado.data || !resultado.data.user) {
+        /*
+        Comprobar que el usuario pueda consultar la tabla clientes.
+        */
 
-            throw new Error(
-                "Supabase no devolvió un usuario autenticado."
+        const prueba = await clienteSupabase
+            .from("clientes")
+            .select("id")
+            .limit(1);
+
+        if (prueba.error) {
+
+            sistemaIniciado = false;
+
+            mostrarEstado(
+                "El inicio de sesión funcionó, pero no se pudo consultar " +
+                "la tabla clientes: " +
+                prueba.error.message
             );
+
+            return;
         }
 
-        sesionActual = resultado.data.user;
         sistemaIniciado = true;
 
         document.getElementById("loginPassword").value = "";
 
-        document.getElementById("conexionPanel").style.display =
-            "none";
-
-        document.getElementById("bienvenidaSistema").style.display =
-            "block";
-
-        document.getElementById("modulosSistema").style.display =
-            "grid";
-
         mostrarEstado(
-            "Sesión iniciada correctamente. Bienvenido al Sistema Empresarial SIPSA."
+            "Acceso correcto. Supabase conectado y sesión iniciada."
         );
+
+        if (
+            document.getElementById("clientesModulo").style.display === "block"
+        ) {
+            await cargarClientes();
+        }
 
     } catch (error) {
 
-        console.error(
-            "Error al iniciar sesión:",
-            error
-        );
-
         sistemaIniciado = false;
 
-        const detalle = error && error.message
-            ? error.message
-            : String(error);
+        console.error("Error Supabase:", error);
 
-        const detalleMinusculas = detalle.toLowerCase();
-
-        if (detalleMinusculas.includes(
-            "invalid login credentials"
-        )) {
-
-            mostrarEstado(
-                "Credenciales inválidas. Supabase no reconoce esa combinación de correo y contraseña en este proyecto. Verifica el correo exacto registrado en Authentication → Users y restablece la contraseña de ese usuario si es necesario."
-            );
-
-        } else if (detalleMinusculas.includes(
-            "email not confirmed"
-        )) {
-
-            mostrarEstado(
-                "El correo no está confirmado. En Supabase, entra en Authentication → Users y confirma el usuario."
-            );
-
-        } else if (
-            detalleMinusculas.includes("failed to fetch") ||
-            detalleMinusculas.includes("network")
-        ) {
-
-            mostrarEstado(
-                "No se pudo conectar con Supabase. Comprueba que el proyecto esté activo y que tengas conexión a Internet."
-            );
-
-        } else {
-
-            mostrarEstado(
-                "No se pudo iniciar sesión: " + detalle
-            );
-        }
-
-    } finally {
-
-        boton.disabled = false;
-        boton.textContent = "Iniciar sesión";
+        mostrarEstado(
+            "No se pudo conectar o iniciar sesión: " +
+            (error.message || String(error))
+        );
     }
 }
 
 
-/* CERRAR SESIÓN */
+/*
+========================================================
+CERRAR SESION
+========================================================
+*/
 
 async function cerrarSesion() {
 
@@ -719,185 +659,68 @@ async function cerrarSesion() {
             }
         }
 
-    } catch (error) {
-
-        console.error(
-            "Error al cerrar sesión:",
-            error
-        );
-    }
-
-    sistemaIniciado = false;
-    sesionActual = null;
-    clientes = [];
-
-    document.getElementById("conexionPanel").style.display =
-        "block";
-
-    document.getElementById("bienvenidaSistema").style.display =
-        "none";
-
-    document.getElementById("modulosSistema").style.display =
-        "none";
-
-    document.getElementById("clientesModulo").style.display =
-        "none";
-
-    document.getElementById("otroModulo").style.display =
-        "none";
-
-    document.getElementById("listaClientes").innerHTML = "";
-
-    mostrarEstado(
-        "Sesión cerrada. Introduce tu correo y contraseña para volver a ingresar."
-    );
-}
-
-
-/* VERIFICAR SESIÓN GUARDADA */
-
-async function verificarSesionGuardada() {
-
-    try {
-
-        const supabase = inicializarSupabase();
-
-        const resultado = await supabase.auth.getSession();
-
-        if (resultado.error) {
-            throw resultado.error;
-        }
-
-        if (resultado.data.session) {
-
-            sesionActual = resultado.data.session.user;
-            sistemaIniciado = true;
-
-            document.getElementById("conexionPanel").style.display =
-                "none";
-
-            document.getElementById("bienvenidaSistema").style.display =
-                "block";
-
-            document.getElementById("modulosSistema").style.display =
-                "grid";
-
-            mostrarEstado(
-                "Sesión activa. Puedes utilizar el Sistema Empresarial."
-            );
-
-        } else {
-
-            mostrarEstado(
-                "Listo. Introduce tu correo y contraseña para iniciar sesión."
-            );
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Error verificando sesión:",
-            error
-        );
+        sistemaIniciado = false;
 
         mostrarEstado(
-            "No se pudo preparar la conexión: " +
+            "Sesión cerrada. Para consultar los datos, vuelve a iniciar sesión."
+        );
+
+    } catch (error) {
+
+        mostrarEstado(
+            "No se pudo cerrar la sesión: " +
             (error.message || String(error))
         );
     }
 }
 
 
-/* NAVEGACIÓN */
+/*
+========================================================
+ABRIR MODULO CLIENTES
+========================================================
+*/
 
 function abrirClientes() {
 
-    if (!sistemaIniciado) {
+    document.querySelector(".bienvenida").style.display = "none";
 
-        mostrarEstado(
-            "Debes iniciar sesión antes de consultar los datos."
-        );
+    document.querySelector(".modulos").style.display = "none";
 
-        return;
-    }
-
-    document.getElementById("bienvenidaSistema").style.display =
-        "none";
-
-    document.getElementById("modulosSistema").style.display =
-        "none";
-
-    document.getElementById("otroModulo").style.display =
-        "none";
-
-    document.getElementById("clientesModulo").style.display =
-        "block";
+    document.getElementById("clientesModulo").style.display = "block";
 
     cargarClientes();
 }
 
 
+/*
+========================================================
+VOLVER AL PANEL PRINCIPAL
+========================================================
+*/
+
 function cerrarClientes() {
 
-    document.getElementById("clientesModulo").style.display =
-        "none";
+    document.getElementById("clientesModulo").style.display = "none";
 
-    volverInicio();
+    document.querySelector(".bienvenida").style.display = "block";
+
+    document.querySelector(".modulos").style.display = "grid";
 }
 
 
-function volverInicio() {
-
-    document.getElementById("clientesModulo").style.display =
-        "none";
-
-    document.getElementById("otroModulo").style.display =
-        "none";
-
-    document.getElementById("bienvenidaSistema").style.display =
-        sistemaIniciado ? "block" : "none";
-
-    document.getElementById("modulosSistema").style.display =
-        sistemaIniciado ? "grid" : "none";
-}
-
-
-function mostrarModulo(nombre) {
-
-    if (!sistemaIniciado) {
-
-        mostrarEstado(
-            "Debes iniciar sesión antes de utilizar el sistema."
-        );
-
-        return;
-    }
-
-    document.getElementById("bienvenidaSistema").style.display =
-        "none";
-
-    document.getElementById("modulosSistema").style.display =
-        "none";
-
-    document.getElementById("clientesModulo").style.display =
-        "none";
-
-    document.getElementById("otroModulo").style.display =
-        "block";
-
-    document.getElementById("tituloOtroModulo").textContent =
-        nombre;
-}
-
-
-/* CARGAR CLIENTES */
+/*
+========================================================
+CARGAR CLIENTES DESDE SUPABASE
+========================================================
+*/
 
 async function cargarClientes() {
 
     if (!clienteSupabase || !sistemaIniciado) {
 
         mostrarMensaje(
-            "Primero inicia sesión.",
+            "Primero inicia sesión en el sistema.",
             false
         );
 
@@ -918,46 +741,44 @@ async function cargarClientes() {
 
         if (resultado.error) {
 
-            throw resultado.error;
+            mostrarMensaje(
+                "Error al cargar clientes: " +
+                resultado.error.message,
+                false
+            );
+
+            lista.innerHTML = "";
+            return;
         }
 
         clientes = resultado.data || [];
 
         mostrarClientes(clientes);
 
-        if (clientes.length === 0) {
-
-            mostrarMensaje(
-                "No hay clientes registrados todavía.",
-                "info"
-            );
-        }
-
     } catch (error) {
 
-        console.error(
-            "Error cargando clientes:",
-            error
+        mostrarMensaje(
+            "Error al cargar clientes: " +
+            error.message,
+            false
         );
 
         lista.innerHTML = "";
-
-        mostrarMensaje(
-            "No se pudieron cargar los clientes: " +
-            (error.message || String(error)),
-            false
-        );
     }
 }
 
 
-/* MOSTRAR CLIENTES */
+/*
+========================================================
+MOSTRAR CLIENTES EN LA TABLA
+========================================================
+*/
 
 function mostrarClientes(datos) {
 
     const lista = document.getElementById("listaClientes");
 
-    if (!datos || datos.length === 0) {
+    if (!datos.length) {
 
         lista.innerHTML =
             "<tr><td colspan='6'>No hay clientes registrados.</td></tr>";
@@ -973,10 +794,10 @@ function mostrarClientes(datos) {
 
         fila.innerHTML = `
             <td>${escapar(cliente.empresa)}</td>
-            <td>${escapar(cliente.area ?? cliente["área"])}</td>
+            <td>${escapar(cliente.area)}</td>
             <td>${escapar(cliente.nombre_contacto)}</td>
-            <td>${escapar(cliente.telefono ?? cliente["teléfono"])}</td>
-            <td>${escapar(cliente.correo_electronico ?? cliente["correo electrónico"])}</td>
+            <td>${escapar(cliente.telefono)}</td>
+            <td>${escapar(cliente.correo_electronico)}</td>
             <td>${escapar(cliente.estado || "")}</td>
         `;
 
@@ -985,45 +806,58 @@ function mostrarClientes(datos) {
 }
 
 
-/* FILTRAR CLIENTES */
+/*
+========================================================
+BUSCAR CLIENTES
+========================================================
+*/
 
 function filtrarClientes() {
 
-    const texto = document.getElementById("buscarCliente")
-        .value.toLowerCase().trim();
+    const texto = document
+        .getElementById("buscarCliente")
+        .value
+        .toLowerCase();
 
-    const filtrados = clientes.filter(cliente => {
+    const filtrados = clientes.filter(cliente =>
 
-        const valores = [
-            cliente.empresa,
-            cliente.area,
-            cliente["área"],
-            cliente.nombre_contacto,
-            cliente.telefono,
-            cliente["teléfono"],
-            cliente.correo_electronico,
-            cliente["correo electrónico"]
-        ];
+        String(cliente.empresa || "")
+            .toLowerCase()
+            .includes(texto) ||
 
-        return valores.some(valor =>
-            String(valor || "")
-                .toLowerCase()
-                .includes(texto)
-        );
-    });
+        String(cliente.area || "")
+            .toLowerCase()
+            .includes(texto) ||
+
+        String(cliente.nombre_contacto || "")
+            .toLowerCase()
+            .includes(texto) ||
+
+        String(cliente.telefono || "")
+            .toLowerCase()
+            .includes(texto) ||
+
+        String(cliente.correo_electronico || "")
+            .toLowerCase()
+            .includes(texto)
+    );
 
     mostrarClientes(filtrados);
 }
 
 
-/* SELECCIONAR EXCEL */
+/*
+========================================================
+SELECCIONAR ARCHIVO EXCEL
+========================================================
+*/
 
 function seleccionarExcel() {
 
-    if (!sistemaIniciado) {
+    if (!clienteSupabase || !sistemaIniciado) {
 
         mostrarMensaje(
-            "Primero inicia sesión.",
+            "Primero inicia sesión en el sistema.",
             false
         );
 
@@ -1033,11 +867,16 @@ function seleccionarExcel() {
     const archivo = document.getElementById("archivoExcel");
 
     archivo.value = "";
+
     archivo.click();
 }
 
 
-/* PROCESAR EXCEL: HOJA EMPRESAS */
+/*
+========================================================
+PROCESAR EXCEL Y ACTUALIZAR CLIENTES
+========================================================
+*/
 
 async function procesarExcel(event) {
 
@@ -1050,7 +889,7 @@ async function procesarExcel(event) {
     if (!clienteSupabase || !sistemaIniciado) {
 
         mostrarMensaje(
-            "Primero inicia sesión.",
+            "Primero inicia sesión en el sistema.",
             false
         );
 
@@ -1060,7 +899,8 @@ async function procesarExcel(event) {
     if (typeof XLSX === "undefined") {
 
         mostrarMensaje(
-            "No se pudo cargar el lector de Excel. Recarga la página e inténtalo nuevamente.",
+            "No se pudo cargar el lector de Excel. " +
+            "Comprueba tu conexión a Internet.",
             false
         );
 
@@ -1070,16 +910,19 @@ async function procesarExcel(event) {
     try {
 
         mostrarMensaje(
-            "Leyendo el archivo Excel...",
+            "Leyendo archivo Excel...",
             "info"
         );
 
         const datos = await archivo.arrayBuffer();
 
-        const libro = XLSX.read(
-            datos,
-            { type: "array" }
-        );
+        const libro = XLSX.read(datos, {
+            type: "array"
+        });
+
+        /*
+        La hoja esperada se llama EMPRESAS.
+        */
 
         if (!libro.SheetNames.includes("EMPRESAS")) {
 
@@ -1104,12 +947,17 @@ async function procesarExcel(event) {
         if (filas.length < 2) {
 
             mostrarMensaje(
-                "La hoja EMPRESAS no contiene filas de datos.",
+                "La hoja EMPRESAS no contiene datos suficientes.",
                 false
             );
 
             return;
         }
+
+        /*
+        Normalizar encabezados para aceptar textos
+        con o sin tildes.
+        */
 
         const encabezados = filas[0].map(normalizarTexto);
 
@@ -1145,21 +993,59 @@ async function procesarExcel(event) {
             ]
         );
 
-        if (
-            indiceEmpresa === -1 ||
-            indiceArea === -1 ||
-            indiceContacto === -1 ||
-            indiceTelefono === -1 ||
-            indiceCorreo === -1
-        ) {
+        if (indiceEmpresa === -1) {
 
             mostrarMensaje(
-                "No se encontraron todos los encabezados necesarios. Revisa Empresa, área, nombre del colaborador, teléfono y correo electrónico.",
+                "No se encontró la columna Empresa.",
                 false
             );
 
             return;
         }
+
+        if (indiceArea === -1) {
+
+            mostrarMensaje(
+                "No se encontró la columna Área.",
+                false
+            );
+
+            return;
+        }
+
+        if (indiceContacto === -1) {
+
+            mostrarMensaje(
+                "No se encontró la columna nombre del colaborador.",
+                false
+            );
+
+            return;
+        }
+
+        if (indiceTelefono === -1) {
+
+            mostrarMensaje(
+                "No se encontró la columna teléfono.",
+                false
+            );
+
+            return;
+        }
+
+        if (indiceCorreo === -1) {
+
+            mostrarMensaje(
+                "No se encontró la columna correo electrónico.",
+                false
+            );
+
+            return;
+        }
+
+        /*
+        Preparar los registros provenientes de Excel.
+        */
 
         const registros = [];
 
@@ -1167,25 +1053,20 @@ async function procesarExcel(event) {
 
             const fila = filas[i];
 
-            const empresa = String(
-                fila[indiceEmpresa] || ""
-            ).trim();
+            const empresa =
+                String(fila[indiceEmpresa] || "").trim();
 
-            const area = String(
-                fila[indiceArea] || ""
-            ).trim();
+            const area =
+                String(fila[indiceArea] || "").trim();
 
-            const contacto = String(
-                fila[indiceContacto] || ""
-            ).trim();
+            const contacto =
+                String(fila[indiceContacto] || "").trim();
 
-            const telefono = String(
-                fila[indiceTelefono] || ""
-            ).trim();
+            const telefono =
+                String(fila[indiceTelefono] || "").trim();
 
-            const correo = String(
-                fila[indiceCorreo] || ""
-            ).trim();
+            const correo =
+                String(fila[indiceCorreo] || "").trim();
 
             if (
                 !empresa &&
@@ -1198,20 +1079,27 @@ async function procesarExcel(event) {
             }
 
             registros.push({
+
                 excel_row_key: "EMPRESAS-" + (i + 1),
+
                 empresa: empresa,
+
                 area: area,
+
                 nombre_contacto: contacto,
+
                 telefono: telefono,
+
                 correo_electronico: correo,
+
                 estado: "activo"
             });
         }
 
-        if (registros.length === 0) {
+        if (!registros.length) {
 
             mostrarMensaje(
-                "No se encontraron registros de clientes en el Excel.",
+                "No se encontraron clientes para importar.",
                 false
             );
 
@@ -1219,9 +1107,14 @@ async function procesarExcel(event) {
         }
 
         mostrarMensaje(
-            "Actualizando " + registros.length + " registros...",
+            "Actualizando " + registros.length + " registros de Excel...",
             "info"
         );
+
+        /*
+        Consultar las filas existentes para identificar
+        cuáles deben actualizarse.
+        */
 
         const existentesResultado = await clienteSupabase
             .from("clientes")
@@ -1229,7 +1122,13 @@ async function procesarExcel(event) {
 
         if (existentesResultado.error) {
 
-            throw existentesResultado.error;
+            mostrarMensaje(
+                "Error consultando clientes: " +
+                existentesResultado.error.message,
+                false
+            );
+
+            return;
         }
 
         const mapaExistentes = new Map();
@@ -1249,6 +1148,10 @@ async function procesarExcel(event) {
         let actualizados = 0;
         let errores = 0;
 
+        /*
+        Insertar nuevos registros y actualizar los existentes.
+        */
+
         for (const registro of registros) {
 
             try {
@@ -1262,13 +1165,21 @@ async function procesarExcel(event) {
                     const resultado = await clienteSupabase
                         .from("clientes")
                         .update({
+
                             empresa: registro.empresa,
+
                             area: registro.area,
+
                             nombre_contacto: registro.nombre_contacto,
+
                             telefono: registro.telefono,
+
                             correo_electronico: registro.correo_electronico,
+
                             estado: registro.estado,
+
                             updated_at: new Date().toISOString()
+
                         })
                         .eq("id", idExistente);
 
@@ -1283,12 +1194,19 @@ async function procesarExcel(event) {
                     const resultado = await clienteSupabase
                         .from("clientes")
                         .insert({
+
                             excel_row_key: registro.excel_row_key,
+
                             empresa: registro.empresa,
+
                             area: registro.area,
+
                             nombre_contacto: registro.nombre_contacto,
+
                             telefono: registro.telefono,
+
                             correo_electronico: registro.correo_electronico,
+
                             estado: registro.estado
                         });
 
@@ -1302,7 +1220,7 @@ async function procesarExcel(event) {
             } catch (error) {
 
                 console.error(
-                    "Error guardando cliente:",
+                    "Error procesando cliente:",
                     error
                 );
 
@@ -1310,25 +1228,26 @@ async function procesarExcel(event) {
             }
         }
 
+        /*
+        Informar el resultado.
+        */
+
         if (errores > 0) {
 
             mostrarMensaje(
-                "Actualización terminada. Nuevos: " +
-                nuevos +
-                " | Actualizados: " +
-                actualizados +
-                " | Errores: " +
-                errores,
+                "Actualización terminada. " +
+                "Nuevos: " + nuevos +
+                " | Actualizados: " + actualizados +
+                " | Errores: " + errores,
                 false
             );
 
         } else {
 
             mostrarMensaje(
-                "Excel actualizado correctamente. Nuevos: " +
-                nuevos +
-                " | Actualizados: " +
-                actualizados,
+                "Excel procesado. " +
+                "Nuevos: " + nuevos +
+                " | Actualizados: " + actualizados,
                 true
             );
         }
@@ -1344,18 +1263,18 @@ async function procesarExcel(event) {
 
         mostrarMensaje(
             "Error procesando Excel: " +
-            (error.message || String(error)),
+            error.message,
             false
         );
-
-    } finally {
-
-        event.target.value = "";
     }
 }
 
 
-/* FUNCIONES AUXILIARES */
+/*
+========================================================
+NORMALIZAR TEXTO
+========================================================
+*/
 
 function normalizarTexto(texto) {
 
@@ -1366,6 +1285,12 @@ function normalizarTexto(texto) {
         .trim();
 }
 
+
+/*
+========================================================
+BUSCAR ENCABEZADOS EN EXCEL
+========================================================
+*/
 
 function buscarColumna(encabezados, nombres) {
 
@@ -1379,6 +1304,50 @@ function buscarColumna(encabezados, nombres) {
     return -1;
 }
 
+
+/*
+========================================================
+MOSTRAR MENSAJES DEL MODULO CLIENTES
+========================================================
+*/
+
+function mostrarMensaje(texto, tipo) {
+
+    const mensaje = document.getElementById("mensaje");
+
+    mensaje.textContent = texto;
+
+    if (tipo === "info") {
+
+        mensaje.className = "mensaje-info";
+
+    } else if (tipo === true) {
+
+        mensaje.className = "mensaje-exito";
+
+    } else {
+
+        mensaje.className = "mensaje-error";
+    }
+
+    mensaje.style.display = "block";
+
+    if (tipo !== "info") {
+
+        setTimeout(() => {
+
+            mensaje.style.display = "none";
+
+        }, 7000);
+    }
+}
+
+
+/*
+========================================================
+PROTEGER LOS TEXTOS MOSTRADOS EN LA TABLA
+========================================================
+*/
 
 function escapar(valor) {
 
@@ -1395,7 +1364,11 @@ function escapar(valor) {
 }
 
 
-/* ERRORES DEL NAVEGADOR */
+/*
+========================================================
+REGISTRAR ERRORES
+========================================================
+*/
 
 window.addEventListener("error", function(event) {
 
@@ -1404,7 +1377,6 @@ window.addEventListener("error", function(event) {
         event.error || event.message
     );
 });
-
 
 window.addEventListener("unhandledrejection", function(event) {
 
@@ -1415,11 +1387,17 @@ window.addEventListener("unhandledrejection", function(event) {
 });
 
 
-/* ARRANQUE */
+/*
+========================================================
+MENSAJE INICIAL
+========================================================
+*/
 
 window.addEventListener("load", function() {
 
-    verificarSesionGuardada();
+    mostrarEstado(
+        "Listo. Escribe ventas y la contraseña configurada en Supabase."
+    );
 });
 
 </script>
